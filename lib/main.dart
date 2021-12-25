@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:nagasone/presentation/chips_screen.dart';
 import 'package:nagasone/presentation/fc_screen.dart';
 import 'package:nagasone/presentation/theme.dart';
+import 'package:nagasone/stores/chip_store.dart';
+
+GetIt getIt = GetIt.instance;
 
 void main() {
+  getIt.registerSingleton<ChipStore>(
+    ChipStore(),
+    signalsReady: true,
+  );
   runApp(const MyApp());
 }
 

@@ -16,6 +16,13 @@ mixin _$MainStore on MainStoreBase, Store {
     return _$rebuildDBAsyncAction.run(() => super.rebuildDB());
   }
 
+  final _$createDumpAsyncAction = AsyncAction('MainStoreBase.createDump');
+
+  @override
+  Future<void> createDump() {
+    return _$createDumpAsyncAction.run(() => super.createDump());
+  }
+
   @override
   String toString() {
     return '''

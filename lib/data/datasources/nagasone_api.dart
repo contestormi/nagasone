@@ -2,12 +2,13 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nagasone/data/models/chip_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:nagasone/data/models/fc_model.dart';
+import 'package:nagasone/data/models/fc_stat_model.dart';
 import 'dart:convert';
 
 import 'package:nagasone/presentation/theme.dart';
 
 class NagasoneAPI {
-  static const _apiUrl = 'https://c241-81-200-8-229.ngrok.io';
+  static const _apiUrl = 'https://391a-81-200-8-229.ngrok.io';
 
   Future<ChipModel> createChipTransaction({
     required int chipCount,
@@ -107,8 +108,7 @@ class NagasoneAPI {
     const url = '$_apiUrl/transaction';
     final http.Response response;
     try {
-      response =
-          await http.get(Uri.parse(url)).timeout(const Duration(seconds: 5));
+      response = await http.get(Uri.parse(url));
     } catch (e) {
       rethrow;
     }
@@ -127,8 +127,7 @@ class NagasoneAPI {
     final url = '$_apiUrl/transaction_fc/$uuid';
     final http.Response response;
     try {
-      response =
-          await http.delete(Uri.parse(url)).timeout(const Duration(seconds: 5));
+      response = await http.delete(Uri.parse(url));
     } catch (e) {
       rethrow;
     }
@@ -151,8 +150,7 @@ class NagasoneAPI {
     const url = '$_apiUrl/db_dump';
     final http.Response response;
     try {
-      response =
-          await http.get(Uri.parse(url)).timeout(const Duration(seconds: 5));
+      response = await http.get(Uri.parse(url));
     } catch (e) {
       Fluttertoast.showToast(
           msg: "$e",
@@ -183,8 +181,7 @@ class NagasoneAPI {
     const url = '$_apiUrl/transaction_fc';
     final http.Response response;
     try {
-      response =
-          await http.get(Uri.parse(url)).timeout(const Duration(seconds: 5));
+      response = await http.get(Uri.parse(url));
     } catch (e) {
       rethrow;
     }
@@ -199,12 +196,27 @@ class NagasoneAPI {
     }
   }
 
+  Future<FCStatModel> getFCStatTransactions() async {
+    const url = '$_apiUrl/transaction_fc_stat';
+    final http.Response response;
+    try {
+      response = await http.get(Uri.parse(url));
+    } catch (e) {
+      rethrow;
+    }
+
+    if (response.statusCode == 200) {
+      return FCStatModel.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception(response.body);
+    }
+  }
+
   Future<bool> rebuildDB() async {
     const url = '$_apiUrl/rebuild';
     final http.Response response;
     try {
-      response =
-          await http.get(Uri.parse(url)).timeout(const Duration(seconds: 5));
+      response = await http.get(Uri.parse(url));
     } catch (e) {
       rethrow;
     }

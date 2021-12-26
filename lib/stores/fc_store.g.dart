@@ -63,6 +63,23 @@ mixin _$FCStore on FCStoreBase, Store {
         .run(() => super.createFCTransation());
   }
 
+  final _$getFCTransactionsAsyncAction =
+      AsyncAction('FCStoreBase.getFCTransactions');
+
+  @override
+  Future<List<FCModel>> getFCTransactions() {
+    return _$getFCTransactionsAsyncAction.run(() => super.getFCTransactions());
+  }
+
+  final _$deleteTransactionAsyncAction =
+      AsyncAction('FCStoreBase.deleteTransaction');
+
+  @override
+  Future<void> deleteTransaction(String uuid, int index) {
+    return _$deleteTransactionAsyncAction
+        .run(() => super.deleteTransaction(uuid, index));
+  }
+
   final _$FCStoreBaseActionController = ActionController(name: 'FCStoreBase');
 
   @override

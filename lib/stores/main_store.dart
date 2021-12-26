@@ -18,4 +18,9 @@ abstract class MainStoreBase with Store {
       getIt<FCStore>().listOfFC.clear();
     }
   }
+
+  @action
+  Future<void> createDump() async {
+    await _api.createDump();
+  }
 }

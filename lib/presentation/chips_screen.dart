@@ -103,6 +103,7 @@ class _ChipsScreenState extends State<ChipsScreen> {
                           itemCount: getIt<ChipStore>().listOfChips.length,
                           itemBuilder: (context, index) {
                             return TransactionWidget(
+                                onTap: () {},
                                 uuid: snapshot.data![index].uuid,
                                 dateTime: snapshot.data![index].datetime,
                                 chipsAmount:
@@ -128,6 +129,7 @@ class _ChipsScreenState extends State<ChipsScreen> {
                 itemCount: getIt<ChipStore>().listOfChips.length,
                 itemBuilder: (context, index) {
                   return TransactionWidget(
+                      onTap: () {},
                       uuid: getIt<ChipStore>().listOfChips[index].uuid,
                       dateTime: getIt<ChipStore>().listOfChips[index].datetime,
                       chipsAmount: getIt<ChipStore>()

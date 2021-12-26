@@ -44,6 +44,12 @@ abstract class FCStoreBase with Store {
     return listOfFC;
   }
 
+  @action
+  Future<void> deleteTransaction(String uuid, int index) async {
+    await _api.deleteFCTransaction(uuid);
+    listOfFC.removeAt(index);
+  }
+
   int calculateAmount() {
     if (val == 1) {
       return 0;

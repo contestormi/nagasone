@@ -107,7 +107,6 @@ class MyApp extends StatelessWidget {
     TextEditingController _textEditingController = TextEditingController();
     switch (value) {
       case 1:
-        //getIt<MainStore>().rebuildDB();
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -146,6 +145,9 @@ class MyApp extends StatelessWidget {
             );
           },
         );
+        break;
+      case 2:
+        getIt<MainStore>().createDump();
         break;
       default:
     }

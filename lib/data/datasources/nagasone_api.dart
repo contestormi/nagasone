@@ -7,7 +7,7 @@ import 'dart:convert';
 import 'package:nagasone/presentation/theme.dart';
 
 class NagasoneAPI {
-  static const _apiUrl = 'https://fc4a-81-200-8-229.ngrok.io';
+  static const _apiUrl = 'https://c241-81-200-8-229.ngrok.io';
 
   Future<ChipModel> createChipTransaction({
     required int chipCount,
@@ -118,6 +118,62 @@ class NagasoneAPI {
       return jsonResponse!
           .map((fc) => ChipModel.fromJson(fc as Map<String, dynamic>))
           .toList();
+    } else {
+      throw Exception(response.body);
+    }
+  }
+
+  Future<void> deleteFCTransaction(String uuid) async {
+    final url = '$_apiUrl/transaction_fc/$uuid';
+    final http.Response response;
+    try {
+      response =
+          await http.delete(Uri.parse(url)).timeout(const Duration(seconds: 5));
+    } catch (e) {
+      rethrow;
+    }
+
+    if (response.statusCode == 200) {
+      Fluttertoast.showToast(
+          msg: "Удалено",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: AppColors.grey,
+          textColor: AppColors.white,
+          fontSize: 12.0);
+    } else {
+      throw Exception(response.body);
+    }
+  }
+
+  Future<void> createDump() async {
+    const url = '$_apiUrl/db_dump';
+    final http.Response response;
+    try {
+      response =
+          await http.get(Uri.parse(url)).timeout(const Duration(seconds: 5));
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: "$e",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: AppColors.grey,
+          textColor: AppColors.white,
+          fontSize: 12.0);
+      rethrow;
+    }
+
+    if (response.statusCode == 200) {
+      Fluttertoast.showToast(
+          msg: "DB dump saved!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: AppColors.grey,
+          textColor: AppColors.white,
+          fontSize: 12.0);
     } else {
       throw Exception(response.body);
     }

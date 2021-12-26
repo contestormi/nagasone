@@ -155,6 +155,36 @@ class FCScreen extends StatelessWidget {
                           itemCount: getIt<FCStore>().listOfFC.length,
                           itemBuilder: (context, index) {
                             return TransactionWidget(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return Observer(builder: (_) {
+                                        return CustomAlertDialog(
+                                          content: Column(
+                                            children: [],
+                                          ),
+                                          firstButtonText: 'Удалить',
+                                          secondButtonText: 'Изменить',
+                                          title:
+                                              'Изменить или удалить FC транзакцию',
+                                          secondButtonCallback: () async {
+                                            Navigator.pop(context);
+                                          },
+                                          firstButtonCallback: () async {
+                                            Navigator.pop(context);
+                                            await getIt<FCStore>()
+                                                .deleteTransaction(
+                                                    getIt<FCStore>()
+                                                        .listOfFC[index]
+                                                        .uuid,
+                                                    index);
+                                          },
+                                        );
+                                      });
+                                    },
+                                  );
+                                },
                                 uuid: snapshot.data![index].uuid,
                                 dateTime: snapshot.data![index].datetime,
                                 chipsAmount:
@@ -180,6 +210,32 @@ class FCScreen extends StatelessWidget {
                 itemCount: getIt<FCStore>().listOfFC.length,
                 itemBuilder: (context, index) {
                   return TransactionWidget(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Observer(builder: (_) {
+                              return CustomAlertDialog(
+                                content: Column(
+                                  children: [],
+                                ),
+                                firstButtonText: 'Удалить',
+                                secondButtonText: 'Изменить',
+                                title: 'Изменить или удалить FC транзакцию',
+                                secondButtonCallback: () async {
+                                  Navigator.pop(context);
+                                },
+                                firstButtonCallback: () async {
+                                  Navigator.pop(context);
+                                  await getIt<FCStore>().deleteTransaction(
+                                      getIt<FCStore>().listOfFC[index].uuid,
+                                      index);
+                                },
+                              );
+                            });
+                          },
+                        );
+                      },
                       uuid: getIt<FCStore>().listOfFC[index].uuid,
                       dateTime: getIt<FCStore>().listOfFC[index].datetime,
                       chipsAmount: getIt<FCStore>().listOfFC[index].amount == 0

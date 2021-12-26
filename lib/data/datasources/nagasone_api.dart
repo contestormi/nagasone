@@ -8,7 +8,7 @@ import 'dart:convert';
 import 'package:nagasone/presentation/theme.dart';
 
 class NagasoneAPI {
-  static const _apiUrl = 'https://391a-81-200-8-229.ngrok.io';
+  static const _apiUrl = 'https://6fe3-128-72-175-2.ngrok.io';
 
   Future<ChipModel> createChipTransaction({
     required int chipCount,

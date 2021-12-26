@@ -72,60 +72,74 @@ class _ChipsScreenState extends State<ChipsScreen> {
                   secondButtonText: 'Подтвердить',
                   title: 'Добавить операцию с фишками',
                   secondButtonCallback: () async {
-                    await getIt<ChipStore>().createFCTransation();
+                    Navigator.pop(context);
+                    await getIt<ChipStore>().createChipTransation();
                   },
                   firstButtonCallback: () => Navigator.pop(context),
                 );
               });
             },
-          );
+          ).then((val) {
+            getIt<ChipStore>().clear();
+          });
         },
         child: const Icon(Icons.add),
       ),
-      body: getIt<ChipStore>().listOfFC.isEmpty
-          ? FutureBuilder<List<ChipModel>>(
-              future: getIt<ChipStore>().getChipsTransactions(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<ChipModel>> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (snapshot.connectionState == ConnectionState.done) {
-                  if (snapshot.hasError) {
-                    return Center(child: Text(snapshot.error.toString()));
-                  } else if (snapshot.hasData) {
-                    return ListView.builder(
-                      itemCount: getIt<ChipStore>().listOfFC.length,
-                      itemBuilder: (context, index) {
-                        return TransactionWidget(
-                          uuid: snapshot.data![index].uuid,
-                          dateTime: snapshot.data![index].datetime,
-                          price: snapshot.data![index].amount,
-                          transactionType:
-                              snapshot.data![index].transactionType,
-                        );
-                      },
-                    );
+      body: Observer(
+        builder: (_) => getIt<ChipStore>().listOfChips.isEmpty
+            ? FutureBuilder<List<ChipModel>>(
+                future: getIt<ChipStore>().getChipsTransactions(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<ChipModel>> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                        child: CircularProgressIndicator(
+                            color: AppColors.darkBlue));
+                  } else if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.hasError) {
+                      return Center(child: Text(snapshot.error.toString()));
+                    } else if (getIt<ChipStore>().listOfChips.isNotEmpty) {
+                      return ListView.builder(
+                          itemCount: getIt<ChipStore>().listOfChips.length,
+                          itemBuilder: (context, index) {
+                            return TransactionWidget(
+                                uuid: snapshot.data![index].uuid,
+                                dateTime: snapshot.data![index].datetime,
+                                chipsAmount:
+                                    snapshot.data![index].chipCount.toString(),
+                                transactionType:
+                                    snapshot.data![index].transactionType,
+                                value: 'фишек');
+                          });
+                    } else {
+                      return const Center(
+                          child: Text(
+                        'Нет данных',
+                        style: TextStyles.titleText14,
+                      ));
+                    }
                   } else {
-                    return const Center(child: Text('Empty data'));
+                    return Center(
+                        child: Text('State: ${snapshot.connectionState}'));
                   }
-                } else {
-                  return Center(
-                      child: Text('State: ${snapshot.connectionState}'));
-                }
-              },
-            )
-          : ListView.builder(
-              itemCount: getIt<ChipStore>().listOfFC.length,
-              itemBuilder: (context, index) {
-                return TransactionWidget(
-                  uuid: getIt<ChipStore>().listOfFC[index].uuid,
-                  dateTime: getIt<ChipStore>().listOfFC[index].datetime,
-                  price: getIt<ChipStore>().listOfFC[index].amount,
-                  transactionType:
-                      getIt<ChipStore>().listOfFC[index].transactionType,
-                );
-              },
-            ),
+                },
+              )
+            : ListView.builder(
+                itemCount: getIt<ChipStore>().listOfChips.length,
+                itemBuilder: (context, index) {
+                  return TransactionWidget(
+                      uuid: getIt<ChipStore>().listOfChips[index].uuid,
+                      dateTime: getIt<ChipStore>().listOfChips[index].datetime,
+                      chipsAmount: getIt<ChipStore>()
+                          .listOfChips[index]
+                          .chipCount
+                          .toString(),
+                      transactionType:
+                          getIt<ChipStore>().listOfChips[index].transactionType,
+                      value: 'фишек');
+                },
+              ),
+      ),
     );
   }
 

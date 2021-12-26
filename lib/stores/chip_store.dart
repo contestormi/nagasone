@@ -16,7 +16,13 @@ abstract class ChipStoreBase with Store {
   double sliderValue = 0;
 
   @observable
-  ObservableList<ChipModel> listOfFC = ObservableList<ChipModel>();
+  ObservableList<ChipModel> listOfChips = ObservableList<ChipModel>();
+
+  @action
+  void clear() {
+    sliderValue = 0;
+    isSwitched = false;
+  }
 
   @action
   void switcher(bool newValue) {
@@ -29,18 +35,17 @@ abstract class ChipStoreBase with Store {
   }
 
   @action
-  Future<void> createFCTransation() {
-    return _api.createChipTransaction(
+  Future<void> createChipTransation() async {
+    var chipTransaction = await _api.createChipTransaction(
         chipCount: sliderValue.toInt(),
         transactionType: isSwitched == true ? 'cashless' : 'cash');
+    listOfChips.add(chipTransaction);
   }
 
   @action
   Future<List<ChipModel>> getChipsTransactions() async {
-    listOfFC.clear();
-    print(listOfFC);
-    listOfFC.addAll(await _api.getChipsTransactions());
-    print(listOfFC);
-    return listOfFC;
+    listOfChips.clear();
+    listOfChips.addAll(await _api.getChipsTransactions());
+    return listOfChips;
   }
 }

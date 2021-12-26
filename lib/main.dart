@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nagasone/presentation/chips_screen.dart';
 import 'package:nagasone/presentation/fc_screen.dart';
 import 'package:nagasone/presentation/theme.dart';
 import 'package:nagasone/stores/chip_store.dart';
+import 'package:nagasone/stores/fc_store.dart';
+import 'package:nagasone/stores/main_store.dart';
+import 'package:nagasone/widgets/custom_alert_dialog.dart';
 
 GetIt getIt = GetIt.instance;
 
@@ -12,7 +16,17 @@ void main() {
     ChipStore(),
     signalsReady: true,
   );
-  runApp(const MyApp());
+  getIt.registerSingleton<MainStore>(
+    MainStore(),
+    signalsReady: true,
+  );
+  getIt.registerSingleton<FCStore>(
+    FCStore(),
+    signalsReady: true,
+  );
+  runApp(
+    MaterialApp(home: const MyApp(), debugShowCheckedModeBanner: false),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -33,7 +47,7 @@ class MyApp extends StatelessWidget {
                     Radius.circular(20.0),
                   ),
                 ),
-                onSelected: (value) {},
+                onSelected: (value) => onSelectedValue(value, context),
                 icon: const Icon(Icons.more_vert, color: AppColors.black),
                 itemBuilder: (_) => [
                   const PopupMenuItem(
@@ -87,5 +101,53 @@ class MyApp extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void onSelectedValue(int value, BuildContext context) {
+    TextEditingController _textEditingController = TextEditingController();
+    switch (value) {
+      case 1:
+        //getIt<MainStore>().rebuildDB();
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return CustomAlertDialog(
+              content: Column(
+                children: [
+                  TextFormField(
+                    controller: _textEditingController,
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: 'Введите пароль',
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                ],
+              ),
+              firstButtonText: 'Отмена',
+              secondButtonText: 'Подтвердить',
+              title: 'Введите пароль для ребилда БД',
+              secondButtonCallback: () {
+                if (_textEditingController.text == 'ggaassoonn') {
+                  getIt<MainStore>().rebuildDB();
+                  Navigator.pop(context);
+                } else {
+                  Fluttertoast.showToast(
+                      msg: "Неправильный пароль",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: AppColors.grey,
+                      textColor: AppColors.white,
+                      fontSize: 12.0);
+                }
+              },
+              firstButtonCallback: () => Navigator.pop(context),
+            );
+          },
+        );
+        break;
+      default:
+    }
   }
 }

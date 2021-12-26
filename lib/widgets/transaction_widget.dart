@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:nagasone/presentation/theme.dart';
+import 'package:nagasone/services/date_time_service.dart';
 
 class TransactionWidget extends StatelessWidget {
-  const TransactionWidget({
-    Key? key,
-    required this.uuid,
-    required this.transactionType,
-    required this.dateTime,
-    required this.price,
-  }) : super(key: key);
+  const TransactionWidget(
+      {Key? key,
+      required this.uuid,
+      required this.transactionType,
+      required this.dateTime,
+      required this.chipsAmount,
+      required this.value})
+      : super(key: key);
 
   final String uuid;
   final String transactionType;
   final String dateTime;
-  final int price;
+  final String chipsAmount;
+  final String value;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +62,7 @@ class TransactionWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 20),
             child: Text(
-              price.toString(),
+              chipsAmount.toString() + ' $value',
               style: TextStyles.titleText14,
             ),
           ),
@@ -68,12 +71,21 @@ class TransactionWidget extends StatelessWidget {
             child: Divider(),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: Text(
-              DateTime.parse(dateTime).month.toString(),
-              style: TextStyles.titleText14,
-            ),
-          ),
+              padding: const EdgeInsets.only(left: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Дата: ${DateTimeService.formatDate(dateTime)}',
+                    style: TextStyles.titleText14,
+                  ),
+                  Text(
+                    'Время: ${DateTimeService.formatTime(dateTime)}',
+                    style: TextStyles.titleText14,
+                  ),
+                  const SizedBox(width: 40)
+                ],
+              )),
           const SizedBox(height: 10)
         ],
       ),

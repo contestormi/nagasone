@@ -39,19 +39,28 @@ mixin _$ChipStore on ChipStoreBase, Store {
     });
   }
 
-  final _$listOfFCAtom = Atom(name: 'ChipStoreBase.listOfFC');
+  final _$listOfChipsAtom = Atom(name: 'ChipStoreBase.listOfChips');
 
   @override
-  ObservableList<ChipModel> get listOfFC {
-    _$listOfFCAtom.reportRead();
-    return super.listOfFC;
+  ObservableList<ChipModel> get listOfChips {
+    _$listOfChipsAtom.reportRead();
+    return super.listOfChips;
   }
 
   @override
-  set listOfFC(ObservableList<ChipModel> value) {
-    _$listOfFCAtom.reportWrite(value, super.listOfFC, () {
-      super.listOfFC = value;
+  set listOfChips(ObservableList<ChipModel> value) {
+    _$listOfChipsAtom.reportWrite(value, super.listOfChips, () {
+      super.listOfChips = value;
     });
+  }
+
+  final _$createChipTransationAsyncAction =
+      AsyncAction('ChipStoreBase.createChipTransation');
+
+  @override
+  Future<void> createChipTransation() {
+    return _$createChipTransationAsyncAction
+        .run(() => super.createChipTransation());
   }
 
   final _$getChipsTransactionsAsyncAction =
@@ -65,6 +74,17 @@ mixin _$ChipStore on ChipStoreBase, Store {
 
   final _$ChipStoreBaseActionController =
       ActionController(name: 'ChipStoreBase');
+
+  @override
+  void clear() {
+    final _$actionInfo = _$ChipStoreBaseActionController.startAction(
+        name: 'ChipStoreBase.clear');
+    try {
+      return super.clear();
+    } finally {
+      _$ChipStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void switcher(bool newValue) {
@@ -89,22 +109,11 @@ mixin _$ChipStore on ChipStoreBase, Store {
   }
 
   @override
-  Future<void> createFCTransation() {
-    final _$actionInfo = _$ChipStoreBaseActionController.startAction(
-        name: 'ChipStoreBase.createFCTransation');
-    try {
-      return super.createFCTransation();
-    } finally {
-      _$ChipStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 isSwitched: ${isSwitched},
 sliderValue: ${sliderValue},
-listOfFC: ${listOfFC}
+listOfChips: ${listOfChips}
     ''';
   }
 }

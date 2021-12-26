@@ -38,7 +38,7 @@ class CustomAlertDialog extends StatelessWidget {
             children: [
               SizedBox(
                 height: 42,
-                width: 136,
+                width: 130,
                 child: ElevatedButton(
                   onPressed: firstButtonCallback,
                   child: Text(
@@ -58,9 +58,12 @@ class CustomAlertDialog extends StatelessWidget {
                   ),
                 ),
               ),
+              const SizedBox(
+                width: 20,
+              ),
               SizedBox(
                 height: 42,
-                width: 136,
+                width: 130,
                 child: ElevatedButton(
                   onPressed: secondButtonCallback,
                   child: Text(secondButtonText, style: TextStyles.text14White),

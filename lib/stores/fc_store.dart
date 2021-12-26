@@ -18,6 +18,43 @@ abstract class FCStoreBase with Store {
   @observable
   bool isSwitched = false;
 
+  @observable
+  bool tempIsSWitcher = false;
+
+  @observable
+  int tempVal = -1;
+
+  @action
+  void setTempValues(bool isSwitched, int val) {
+    tempIsSWitcher = isSwitched;
+    if (val == 0) {
+      tempVal = 1;
+    } else if (val == 400) {
+      tempVal = 2;
+    } else if (val == 900) {
+      tempVal = 3;
+    } else if (val == 1500) {
+      tempVal = 4;
+    }
+  }
+
+  @action
+  void tempSwitcher(bool newValue) {
+    tempIsSWitcher = newValue;
+  }
+
+  @action
+  Future<void> changeFCTransaction(int index, String uuid) async {
+    var fCTransaction = await _api.changeFCTransaction(
+        uuid: uuid,
+        amount: calculateAmount(tempVal),
+        transactionType: tempIsSWitcher == true ? 'cashless' : 'cash');
+    print(fCTransaction.amount);
+    print(fCTransaction.transactionType);
+
+    listOfFC[index] = fCTransaction;
+  }
+
   @action
   void clear() {
     val = -1;
@@ -32,7 +69,7 @@ abstract class FCStoreBase with Store {
   @action
   Future<void> createFCTransation() async {
     var fCTransaction = await _api.createFCTransaction(
-        amount: calculateAmount(),
+        amount: calculateAmount(val),
         transactionType: isSwitched == true ? 'cashless' : 'cash');
     listOfFC.add(fCTransaction);
   }
@@ -50,12 +87,12 @@ abstract class FCStoreBase with Store {
     listOfFC.removeAt(index);
   }
 
-  int calculateAmount() {
-    if (val == 1) {
+  int calculateAmount(int variable) {
+    if (variable == 1) {
       return 0;
-    } else if (val == 2) {
+    } else if (variable == 2) {
       return 400;
-    } else if (val == 3) {
+    } else if (variable == 3) {
       return 900;
     } else {
       return 1500;

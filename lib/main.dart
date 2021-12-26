@@ -142,6 +142,7 @@ class MyApp extends StatelessWidget {
                 }
               },
               firstButtonCallback: () => Navigator.pop(context),
+              showButtons: true,
             );
           },
         );

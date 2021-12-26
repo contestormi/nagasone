@@ -7,7 +7,7 @@ import 'dart:convert';
 import 'package:nagasone/presentation/theme.dart';
 
 class NagasoneAPI {
-  static const _apiUrl = 'https://c241-81-200-8-229.ngrok.io';
+  static const _apiUrl = 'https://499b-81-200-8-229.ngrok.io';
 
   Future<ChipModel> createChipTransaction({
     required int chipCount,
@@ -76,6 +76,54 @@ class NagasoneAPI {
       );
       Fluttertoast.showToast(
           msg: "Успешно создано",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: AppColors.grey,
+          textColor: AppColors.white,
+          fontSize: 12.0);
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: "$e",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: AppColors.grey,
+          textColor: AppColors.white,
+          fontSize: 12.0);
+      rethrow;
+    }
+
+    if (response.statusCode == 200) {
+      return FCModel.fromJson(
+        jsonDecode(response.body.replaceAll("\n", "")) as Map<String, dynamic>,
+      );
+    } else {
+      throw Exception(response.body);
+    }
+  }
+
+  Future<FCModel> changeFCTransaction({
+    required int amount,
+    required String transactionType,
+    required String uuid,
+  }) async {
+    final url = '$_apiUrl/transaction_fc/$uuid';
+
+    final body = <String, dynamic>{
+      'amount': amount,
+      'transactionType': transactionType,
+    };
+
+    final http.Response response;
+    try {
+      response = await http.put(
+        Uri.parse(url),
+        headers: {"Content-Type": "application/json"},
+        body: json.encode(body),
+      );
+      Fluttertoast.showToast(
+          msg: "Успешно изменено",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,

@@ -8,16 +8,16 @@ part of 'chip_stat_model.dart';
 
 ChipStatModel _$ChipStatModelFromJson(Map<String, dynamic> json) =>
     ChipStatModel(
-      cashChipCount: json['cashChipCount'] as int,
-      cashSum: json['cashSum'] as int,
-      cashlessChipCount: json['cashlessChipCount'] as int,
-      cashlessSum: json['cashlessSum'] as int,
+      cashChipCount: json['cash_chip_count'] as int,
+      cashlessChipCount: json['cashless_chip_count'] as int,
+      cashSum: json['cash_sum'] as int,
+      cashlessSum: json['cashless_sum'] as int,
     );
 
 Map<String, dynamic> _$ChipStatModelToJson(ChipStatModel instance) =>
     <String, dynamic>{
-      'cashChipCount': instance.cashChipCount,
-      'cashSum': instance.cashSum,
-      'cashlessChipCount': instance.cashlessChipCount,
-      'cashlessSum': instance.cashlessSum,
+      'cash_chip_count': instance.cashChipCount,
+      'cashless_chip_count': instance.cashlessChipCount,
+      'cash_sum': instance.cashSum,
+      'cashless_sum': instance.cashlessSum,
     };

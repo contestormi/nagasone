@@ -7,7 +7,7 @@ class ChipStatStore = _ChipStatStoreBase with _$ChipStatStore;
 
 abstract class _ChipStatStoreBase with Store {
   @action
-  Future<ChipStatModel> future() async{
+  Future<ChipStatModel> future() async {
     return NagasoneAPI().getChipStatTransactions();
   }
 }

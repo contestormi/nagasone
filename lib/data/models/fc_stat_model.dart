@@ -4,7 +4,9 @@ part 'fc_stat_model.g.dart';
 
 @JsonSerializable()
 class FCStatModel {
+  @JsonKey(name: 'cash_fc_sum')
   final int cashFcSum;
+  @JsonKey(name: 'cashless_fc_sum')
   final int cashlessFcSum;
 
   FCStatModel({

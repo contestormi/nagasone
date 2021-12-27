@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
+import 'package:nagasone/data/datasources/nagasone_api.dart';
 import 'package:nagasone/data/models/chip_stat_model.dart';
 import 'package:nagasone/data/models/fc_stat_model.dart';
 import 'package:nagasone/presentation/chips_screen.dart';

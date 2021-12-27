@@ -7,12 +7,12 @@ part of 'fc_stat_model.dart';
 // **************************************************************************
 
 FCStatModel _$FCStatModelFromJson(Map<String, dynamic> json) => FCStatModel(
-      cashFcSum: json['cashFcSum'] as int,
-      cashlessFcSum: json['cashlessFcSum'] as int,
+      cashFcSum: json['cash_fc_sum'] as int,
+      cashlessFcSum: json['cashless_fc_sum'] as int,
     );
 
 Map<String, dynamic> _$FCStatModelToJson(FCStatModel instance) =>
     <String, dynamic>{
-      'cashFcSum': instance.cashFcSum,
-      'cashlessFcSum': instance.cashlessFcSum,
+      'cash_fc_sum': instance.cashFcSum,
+      'cashless_fc_sum': instance.cashlessFcSum,
     };

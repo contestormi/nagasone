@@ -7,6 +7,22 @@ import 'package:nagasone/stores/chip_store.dart';
 import 'package:nagasone/widgets/custom_alert_dialog.dart';
 import 'package:nagasone/widgets/transaction_widget.dart';
 
+int calculateRubles(int chips) {
+  if (chips < 10) {
+    return 250 * chips;
+  } else if (chips >= 10 && chips < 20) {
+    return 220 * chips;
+  } else if (chips >= 20 && chips < 30) {
+    return 200 * chips;
+  } else if (chips >= 30 && chips < 50) {
+    return 185 * chips;
+  } else if (chips >= 50 && chips < 100) {
+    return 180 * chips;
+  } else {
+    return 160 * chips;
+  }
+}
+
 class ChipsScreen extends StatefulWidget {
   const ChipsScreen({Key? key}) : super(key: key);
 
@@ -100,19 +116,7 @@ class _ChipsScreenState extends State<ChipsScreen> {
                     if (snapshot.hasError) {
                       return Center(child: Text(snapshot.error.toString()));
                     } else if (getIt<ChipStore>().listOfChips.isNotEmpty) {
-                      return ListView.builder(
-                          itemCount: getIt<ChipStore>().listOfChips.length,
-                          itemBuilder: (context, index) {
-                            return TransactionWidget(
-                                onTap: () {},
-                                uuid: snapshot.data![index].uuid,
-                                dateTime: snapshot.data![index].datetime,
-                                chipsAmount:
-                                    snapshot.data![index].chipCount.toString(),
-                                transactionType:
-                                    snapshot.data![index].transactionType,
-                                value: 'фишек');
-                          });
+                      return ListOfChips();
                     } else {
                       return const Center(
                           child: Text(
@@ -126,39 +130,132 @@ class _ChipsScreenState extends State<ChipsScreen> {
                   }
                 },
               )
-            : ListView.builder(
-                itemCount: getIt<ChipStore>().listOfChips.length,
-                itemBuilder: (context, index) {
-                  return TransactionWidget(
-                      onTap: () {},
-                      uuid: getIt<ChipStore>().listOfChips[index].uuid,
-                      dateTime: getIt<ChipStore>().listOfChips[index].datetime,
-                      chipsAmount: getIt<ChipStore>()
-                          .listOfChips[index]
-                          .chipCount
-                          .toString(),
-                      transactionType:
-                          getIt<ChipStore>().listOfChips[index].transactionType,
-                      value: 'фишек');
-                },
-              ),
+            : ListOfChips(),
       ),
     );
   }
+}
 
-  int calculateRubles(int chips) {
-    if (chips < 10) {
-      return 250 * chips;
-    } else if (chips >= 10 && chips < 20) {
-      return 220 * chips;
-    } else if (chips >= 20 && chips < 30) {
-      return 200 * chips;
-    } else if (chips >= 30 && chips < 50) {
-      return 185 * chips;
-    } else if (chips >= 50 && chips < 100) {
-      return 180 * chips;
-    } else {
-      return 160 * chips;
-    }
+class ListOfChips extends StatelessWidget {
+  const ListOfChips({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: getIt<ChipStore>().listOfChips.length,
+      itemBuilder: (context, index) {
+        return TransactionWidget(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return CustomAlertDialog(
+                    content: Column(
+                      children: [],
+                    ),
+                    firstButtonText: 'Удалить',
+                    secondButtonText: 'Изменить',
+                    title: 'Изменить или удалить FC транзакцию',
+                    secondButtonCallback: () async {
+                      Navigator.pop(context);
+                      getIt<ChipStore>().setTempValues(
+                          getIt<ChipStore>()
+                                      .listOfChips[index]
+                                      .transactionType ==
+                                  'cash'
+                              ? false
+                              : true,
+                          getIt<ChipStore>()
+                              .listOfChips[index]
+                              .chipCount
+                              .toDouble());
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Observer(builder: (_) {
+                            return CustomAlertDialog(
+                              content: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Text(
+                                        'НАЛ',
+                                        style: TextStyles.textBold14,
+                                      ),
+                                      Switch(
+                                        value:
+                                            getIt<ChipStore>().tempIsSwitched,
+                                        onChanged: (value) => getIt<ChipStore>()
+                                            .tempSwitcher(value),
+                                        activeTrackColor: AppColors.lightBlue,
+                                        activeColor: AppColors.darkBlue,
+                                        inactiveThumbColor: AppColors.darkBlue,
+                                        inactiveTrackColor: AppColors.lightBlue,
+                                      ),
+                                      const Text('БЕЗНАЛ',
+                                          style: TextStyles.textBold14),
+                                    ],
+                                  ),
+                                  Text(
+                                    'Фишек: ${getIt<ChipStore>().tempSliderValue.toInt().toString()}',
+                                    style: TextStyles.titleText20,
+                                  ),
+                                  Slider(
+                                    inactiveColor: AppColors.lightBlue,
+                                    activeColor: AppColors.darkBlue,
+                                    divisions: 100,
+                                    min: 0.0,
+                                    max: 100.0,
+                                    value: getIt<ChipStore>().tempSliderValue,
+                                    onChanged: (value) => getIt<ChipStore>()
+                                        .changeTempSliderValue(value),
+                                  ),
+                                  Text(
+                                    'Рублей: ${calculateRubles(getIt<ChipStore>().tempSliderValue.toInt())}',
+                                    style: TextStyles.titleText20,
+                                  ),
+                                  const SizedBox(height: 15)
+                                ],
+                              ),
+                              firstButtonText: 'Отмена',
+                              secondButtonText: 'Изменить',
+                              title: 'Изменение FC транзакции',
+                              secondButtonCallback: () async {
+                                getIt<ChipStore>().changeChipTransation(
+                                    getIt<ChipStore>().listOfChips[index].uuid,
+                                    index);
+                                Navigator.pop(context);
+                              },
+                              firstButtonCallback: () async {
+                                Navigator.pop(context);
+                              },
+                              showButtons: true,
+                            );
+                          });
+                        },
+                      );
+                    },
+                    firstButtonCallback: () async {
+                      Navigator.pop(context);
+                      await getIt<ChipStore>().deleteTransaction(
+                          getIt<ChipStore>().listOfChips[index].uuid, index);
+                    },
+                    showButtons: true,
+                  );
+                },
+              );
+            },
+            uuid: getIt<ChipStore>().listOfChips[index].uuid,
+            dateTime: getIt<ChipStore>().listOfChips[index].datetime,
+            chipsAmount:
+                getIt<ChipStore>().listOfChips[index].chipCount.toString(),
+            transactionType:
+                getIt<ChipStore>().listOfChips[index].transactionType,
+            value: 'фишек');
+      },
+    );
   }
 }

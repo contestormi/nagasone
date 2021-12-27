@@ -4,15 +4,19 @@ part 'chip_stat_model.g.dart';
 
 @JsonSerializable()
 class ChipStatModel {
+  @JsonKey(name: 'cash_chip_count')
   final int cashChipCount;
-  final int cashSum;
+  @JsonKey(name: 'cashless_chip_count')
   final int cashlessChipCount;
+  @JsonKey(name: 'cash_sum')
+  final int cashSum;
+  @JsonKey(name: 'cashless_sum')
   final int cashlessSum;
 
   ChipStatModel({
     required this.cashChipCount,
-    required this.cashSum,
     required this.cashlessChipCount,
+    required this.cashSum,
     required this.cashlessSum,
   });
 

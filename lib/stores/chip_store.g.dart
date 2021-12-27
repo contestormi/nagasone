@@ -54,6 +54,45 @@ mixin _$ChipStore on ChipStoreBase, Store {
     });
   }
 
+  final _$tempIsSwitchedAtom = Atom(name: 'ChipStoreBase.tempIsSwitched');
+
+  @override
+  bool get tempIsSwitched {
+    _$tempIsSwitchedAtom.reportRead();
+    return super.tempIsSwitched;
+  }
+
+  @override
+  set tempIsSwitched(bool value) {
+    _$tempIsSwitchedAtom.reportWrite(value, super.tempIsSwitched, () {
+      super.tempIsSwitched = value;
+    });
+  }
+
+  final _$tempSliderValueAtom = Atom(name: 'ChipStoreBase.tempSliderValue');
+
+  @override
+  double get tempSliderValue {
+    _$tempSliderValueAtom.reportRead();
+    return super.tempSliderValue;
+  }
+
+  @override
+  set tempSliderValue(double value) {
+    _$tempSliderValueAtom.reportWrite(value, super.tempSliderValue, () {
+      super.tempSliderValue = value;
+    });
+  }
+
+  final _$changeChipTransationAsyncAction =
+      AsyncAction('ChipStoreBase.changeChipTransation');
+
+  @override
+  Future<void> changeChipTransation(String uuid, int index) {
+    return _$changeChipTransationAsyncAction
+        .run(() => super.changeChipTransation(uuid, index));
+  }
+
   final _$createChipTransationAsyncAction =
       AsyncAction('ChipStoreBase.createChipTransation');
 
@@ -70,6 +109,15 @@ mixin _$ChipStore on ChipStoreBase, Store {
   Future<List<ChipModel>> getChipsTransactions() {
     return _$getChipsTransactionsAsyncAction
         .run(() => super.getChipsTransactions());
+  }
+
+  final _$deleteTransactionAsyncAction =
+      AsyncAction('ChipStoreBase.deleteTransaction');
+
+  @override
+  Future<void> deleteTransaction(String uuid, int index) {
+    return _$deleteTransactionAsyncAction
+        .run(() => super.deleteTransaction(uuid, index));
   }
 
   final _$ChipStoreBaseActionController =
@@ -98,6 +146,39 @@ mixin _$ChipStore on ChipStoreBase, Store {
   }
 
   @override
+  void tempSwitcher(bool newValue) {
+    final _$actionInfo = _$ChipStoreBaseActionController.startAction(
+        name: 'ChipStoreBase.tempSwitcher');
+    try {
+      return super.tempSwitcher(newValue);
+    } finally {
+      _$ChipStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setTempValues(bool isSwitched, double sliderValue) {
+    final _$actionInfo = _$ChipStoreBaseActionController.startAction(
+        name: 'ChipStoreBase.setTempValues');
+    try {
+      return super.setTempValues(isSwitched, sliderValue);
+    } finally {
+      _$ChipStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void changeTempSliderValue(double newValue) {
+    final _$actionInfo = _$ChipStoreBaseActionController.startAction(
+        name: 'ChipStoreBase.changeTempSliderValue');
+    try {
+      return super.changeTempSliderValue(newValue);
+    } finally {
+      _$ChipStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void changeSliderValue(double newValue) {
     final _$actionInfo = _$ChipStoreBaseActionController.startAction(
         name: 'ChipStoreBase.changeSliderValue');
@@ -113,7 +194,9 @@ mixin _$ChipStore on ChipStoreBase, Store {
     return '''
 isSwitched: ${isSwitched},
 sliderValue: ${sliderValue},
-listOfChips: ${listOfChips}
+listOfChips: ${listOfChips},
+tempIsSwitched: ${tempIsSwitched},
+tempSliderValue: ${tempSliderValue}
     ''';
   }
 }

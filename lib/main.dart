@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
+import 'package:nagasone/data/models/chip_stat_model.dart';
+import 'package:nagasone/data/models/fc_stat_model.dart';
 import 'package:nagasone/presentation/chips_screen.dart';
 import 'package:nagasone/presentation/fc_screen.dart';
 import 'package:nagasone/presentation/theme.dart';
@@ -151,6 +154,70 @@ class MyApp extends StatelessWidget {
         break;
       case 2:
         getIt<MainStore>().createDump();
+        break;
+      case 4:
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return CustomAlertDialog(
+              content: Observer(builder: (_) {
+                return FutureBuilder<ChipStatModel>(
+                    future: getIt<MainStore>().getChipStatTransactions(),
+                    builder: (context, snapshot) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                              'Количество фишек за нал: ${snapshot.hasData ? snapshot.data!.cashChipCount.toString() : 0.toString()}'),
+                          Text(
+                              'Количество фишек за безнал: ${snapshot.hasData ? snapshot.data!.cashlessChipCount.toString() : 0.toString()}'),
+                          Text(
+                              'Сумма платежей за нал: ${snapshot.hasData ? snapshot.data!.cashSum.toString() : 0.toString()}'),
+                          Text(
+                              'Сумма платежей за безнал: ${snapshot.hasData ? snapshot.data!.cashlessSum.toString() : 0.toString()}'),
+                        ],
+                      );
+                    });
+              }),
+              firstButtonText: '',
+              secondButtonText: '',
+              title: 'Стата по фишкам',
+              secondButtonCallback: () {},
+              firstButtonCallback: () {},
+              showButtons: false,
+            );
+          },
+        );
+        break;
+      case 5:
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return CustomAlertDialog(
+              content: Observer(builder: (_) {
+                return FutureBuilder<FCStatModel>(
+                    future: getIt<MainStore>().getFCStatTransactions(),
+                    builder: (context, snapshot) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                              'Сумма платежей за нал: ${snapshot.hasData ? snapshot.data!.cashFcSum.toString() : 0.toString()}'),
+                          Text(
+                              'Сумма платежей за безнал: ${snapshot.hasData ? snapshot.data!.cashlessFcSum.toString() : 0.toString()}'),
+                        ],
+                      );
+                    });
+              }),
+              firstButtonText: '',
+              secondButtonText: '',
+              title: 'Стата по FC',
+              secondButtonCallback: () {},
+              firstButtonCallback: () {},
+              showButtons: false,
+            );
+          },
+        );
         break;
       default:
     }

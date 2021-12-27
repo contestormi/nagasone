@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nagasone/data/models/chip_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:nagasone/data/models/chip_stat_model.dart';
 import 'package:nagasone/data/models/fc_model.dart';
 import 'dart:convert';
 import 'dart:math';
@@ -12,8 +13,10 @@ import 'package:nagasone/presentation/theme.dart';
 import 'package:nagasone/services/date_time_service.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../models/fc_stat_model.dart';
+
 class NagasoneAPI {
-  static const _apiUrl = 'https://f147-81-200-8-155.ngrok.io';
+  static const _apiUrl = 'http://35.214.202.118';
   final dio = Dio();
 
   Future<void> downloadFCReport() async {
@@ -403,6 +406,40 @@ class NagasoneAPI {
       return jsonResponse!
           .map((fc) => FCModel.fromJson(fc as Map<String, dynamic>))
           .toList();
+    } else {
+      throw Exception(response.body);
+    }
+  }
+
+  Future<FCStatModel> getFCStatTransactions() async {
+    const url = '$_apiUrl/transaction_fc_stat';
+    final http.Response response;
+    try {
+      response =
+          await http.get(Uri.parse(url)).timeout(const Duration(seconds: 5));
+    } catch (e) {
+      rethrow;
+    }
+
+    if (response.statusCode == 200) {
+      return FCStatModel.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception(response.body);
+    }
+  }
+
+  Future<ChipStatModel> getChipStatTransactions() async {
+    const url = '$_apiUrl/transaction_stat';
+    final http.Response response;
+    try {
+      response =
+          await http.get(Uri.parse(url)).timeout(const Duration(seconds: 5));
+    } catch (e) {
+      rethrow;
+    }
+
+    if (response.statusCode == 200) {
+      return ChipStatModel.fromJson(jsonDecode(response.body));
     } else {
       throw Exception(response.body);
     }

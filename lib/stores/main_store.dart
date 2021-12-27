@@ -1,5 +1,7 @@
 import 'package:mobx/mobx.dart';
 import 'package:nagasone/data/datasources/nagasone_api.dart';
+import 'package:nagasone/data/models/chip_stat_model.dart';
+import 'package:nagasone/data/models/fc_stat_model.dart';
 import 'package:nagasone/main.dart';
 import 'package:nagasone/stores/chip_store.dart';
 import 'package:nagasone/stores/fc_store.dart';
@@ -22,5 +24,15 @@ abstract class MainStoreBase with Store {
   @action
   Future<void> createDump() async {
     await _api.createDump();
+  }
+
+  @action
+  Future<ChipStatModel> getChipStatTransactions() async {
+    return _api.getChipStatTransactions();
+  }
+
+  @action
+  Future<FCStatModel> getFCStatTransactions() {
+    return _api.getFCStatTransactions();
   }
 }

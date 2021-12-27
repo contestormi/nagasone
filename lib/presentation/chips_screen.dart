@@ -102,35 +102,73 @@ class _ChipsScreenState extends State<ChipsScreen> {
         },
         child: const Icon(Icons.add),
       ),
-      body: Observer(
-        builder: (_) => getIt<ChipStore>().listOfChips.isEmpty
-            ? FutureBuilder<List<ChipModel>>(
-                future: getIt<ChipStore>().getChipsTransactions(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<List<ChipModel>> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                        child: CircularProgressIndicator(
-                            color: AppColors.darkBlue));
-                  } else if (snapshot.connectionState == ConnectionState.done) {
-                    if (snapshot.hasError) {
-                      return Center(child: Text(snapshot.error.toString()));
-                    } else if (getIt<ChipStore>().listOfChips.isNotEmpty) {
-                      return ListOfChips();
-                    } else {
-                      return const Center(
-                          child: Text(
-                        'Нет данных',
-                        style: TextStyles.titleText14,
-                      ));
-                    }
-                  } else {
-                    return Center(
-                        child: Text('State: ${snapshot.connectionState}'));
-                  }
-                },
-              )
-            : ListOfChips(),
+      body: Column(
+        children: [
+          GestureDetector(
+            onTap: () async {
+              await getIt<ChipStore>().downloadReportChips();
+            },
+            child: Container(
+              color: Colors.transparent,
+              padding: EdgeInsets.all(8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Отчет по фишкам',
+                    style: TextStyles.titleText16DarkBlue,
+                  ),
+                  Column(
+                    children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Image.asset('assets/download_icon.png', scale: 3),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            child: Observer(
+              builder: (_) => getIt<ChipStore>().listOfChips.isEmpty
+                  ? FutureBuilder<List<ChipModel>>(
+                      future: getIt<ChipStore>().getChipsTransactions(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<List<ChipModel>> snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator(
+                                  color: AppColors.darkBlue));
+                        } else if (snapshot.connectionState ==
+                            ConnectionState.done) {
+                          if (snapshot.hasError) {
+                            return Center(
+                                child: Text(snapshot.error.toString()));
+                          } else if (getIt<ChipStore>()
+                              .listOfChips
+                              .isNotEmpty) {
+                            return ListOfChips();
+                          } else {
+                            return const Center(
+                                child: Text(
+                              'Нет данных',
+                              style: TextStyles.titleText14,
+                            ));
+                          }
+                        } else {
+                          return Center(
+                              child:
+                                  Text('State: ${snapshot.connectionState}'));
+                        }
+                      },
+                    )
+                  : ListOfChips(),
+            ),
+          ),
+        ],
       ),
     );
   }

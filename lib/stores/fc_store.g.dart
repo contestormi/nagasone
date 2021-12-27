@@ -84,6 +84,14 @@ mixin _$FCStore on FCStoreBase, Store {
     });
   }
 
+  final _$downloadReportFCAsyncAction =
+      AsyncAction('FCStoreBase.downloadReportFC');
+
+  @override
+  Future<void> downloadReportFC() {
+    return _$downloadReportFCAsyncAction.run(() => super.downloadReportFC());
+  }
+
   final _$changeFCTransactionAsyncAction =
       AsyncAction('FCStoreBase.changeFCTransaction');
 

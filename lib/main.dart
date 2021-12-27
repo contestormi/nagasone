@@ -11,7 +11,7 @@ import 'package:nagasone/widgets/custom_alert_dialog.dart';
 
 GetIt getIt = GetIt.instance;
 
-void main() {
+void main() async {
   getIt.registerSingleton<ChipStore>(
     ChipStore(),
     signalsReady: true,
@@ -24,9 +24,11 @@ void main() {
     FCStore(),
     signalsReady: true,
   );
+
   runApp(
     MaterialApp(home: const MyApp(), debugShowCheckedModeBanner: false),
   );
+  WidgetsFlutterBinding.ensureInitialized();
 }
 
 class MyApp extends StatelessWidget {

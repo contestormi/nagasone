@@ -84,6 +84,15 @@ mixin _$ChipStore on ChipStoreBase, Store {
     });
   }
 
+  final _$downloadReportChipsAsyncAction =
+      AsyncAction('ChipStoreBase.downloadReportChips');
+
+  @override
+  Future<void> downloadReportChips() {
+    return _$downloadReportChipsAsyncAction
+        .run(() => super.downloadReportChips());
+  }
+
   final _$changeChipTransationAsyncAction =
       AsyncAction('ChipStoreBase.changeChipTransation');
 
@@ -151,6 +160,17 @@ mixin _$ChipStore on ChipStoreBase, Store {
         name: 'ChipStoreBase.tempSwitcher');
     try {
       return super.tempSwitcher(newValue);
+    } finally {
+      _$ChipStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setTempValues(bool isSwitched, double sliderValue) {
+    final _$actionInfo = _$ChipStoreBaseActionController.startAction(
+        name: 'ChipStoreBase.setTempValues');
+    try {
+      return super.setTempValues(isSwitched, sliderValue);
     } finally {
       _$ChipStoreBaseActionController.endAction(_$actionInfo);
     }

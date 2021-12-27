@@ -36,6 +36,11 @@ abstract class ChipStoreBase with Store {
   }
 
   @action
+  Future<void> downloadReportChips() async {
+    _api.downloadChipsReport();
+  }
+
+  @action
   void tempSwitcher(bool newValue) {
     tempIsSwitched = newValue;
   }

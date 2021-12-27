@@ -21,4 +21,6 @@ abstract class TextStyles {
   static const titleText20 = TextStyle(
       color: AppColors.black, fontSize: 20, fontWeight: FontWeight.bold);
   static const titleText19 = TextStyle(color: AppColors.black, fontSize: 19);
+  static const titleText16DarkBlue =
+      TextStyle(color: AppColors.darkBlue, fontSize: 16);
 }

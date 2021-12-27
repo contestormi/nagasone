@@ -1,13 +1,102 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nagasone/data/models/chip_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:nagasone/data/models/fc_model.dart';
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:nagasone/presentation/theme.dart';
+import 'package:nagasone/services/date_time_service.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class NagasoneAPI {
-  static const _apiUrl = 'https://187f-81-200-8-155.ngrok.io';
+  static const _apiUrl = 'https://f147-81-200-8-155.ngrok.io';
+  final dio = Dio();
+
+  Future<void> downloadFCReport() async {
+    Random ran = Random();
+    Fluttertoast.showToast(
+        msg: 'Загрузка началась',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: AppColors.grey,
+        textColor: AppColors.white,
+        fontSize: 12.0);
+    var status = await Permission.storage.status;
+    if (!status.isGranted) {
+      await Permission.storage.request();
+    }
+    try {
+      String documentsPath = '/storage/emulated/0/Documents';
+      Directory(documentsPath)
+          .create(recursive: true)
+          .then((Directory directory) async {
+        Response response = await dio.download(
+          '$_apiUrl/fc/Transaction_fc.csv',
+          '${directory.path}/Transaction_fc${DateTimeService.formatDate(DateTime.now().toString())}${ran.nextInt(1000)}.csv',
+          options: Options(
+            responseType: ResponseType.bytes,
+            followRedirects: false,
+          ),
+        );
+      });
+      Fluttertoast.showToast(
+          msg: 'Загрузка окончена, файл лежит в документах',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: AppColors.grey,
+          textColor: AppColors.white,
+          fontSize: 12.0);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> downloadChipsReport() async {
+    Random ran = Random();
+    Fluttertoast.showToast(
+        msg: 'Загрузка началась',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: AppColors.grey,
+        textColor: AppColors.white,
+        fontSize: 12.0);
+    var status = await Permission.storage.status;
+    if (!status.isGranted) {
+      await Permission.storage.request();
+    }
+    try {
+      String documentsPath = '/storage/emulated/0/Documents';
+      Directory(documentsPath)
+          .create(recursive: true)
+          .then((Directory directory) async {
+        Response response = await dio.download(
+          '$_apiUrl/tr/Transaction_chip.csv',
+          '${directory.path}/Transaction_chip${DateTimeService.formatDate(DateTime.now().toString())}${ran.nextInt(1000)}.csv',
+          options: Options(
+            responseType: ResponseType.bytes,
+            followRedirects: false,
+          ),
+        );
+      });
+      Fluttertoast.showToast(
+          msg: 'Загрузка окончена, файл лежит в документах',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: AppColors.grey,
+          textColor: AppColors.white,
+          fontSize: 12.0);
+    } catch (e) {
+      print(e);
+    }
+  }
 
   Future<ChipModel> createChipTransaction({
     required int chipCount,

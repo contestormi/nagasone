@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:mobx/mobx.dart';
 import 'package:nagasone/data/datasources/nagasone_api.dart';
 import 'package:nagasone/data/models/fc_model.dart';
@@ -23,6 +24,11 @@ abstract class FCStoreBase with Store {
 
   @observable
   int tempVal = -1;
+
+  @action
+  Future<void> downloadReportFC() async {
+    _api.downloadFCReport();
+  }
 
   @action
   void setTempValues(bool isSwitched, int val) {

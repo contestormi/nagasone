@@ -38,35 +38,71 @@ class FCScreen extends StatelessWidget {
         },
         child: const Icon(Icons.add),
       ),
-      body: Observer(
-        builder: (_) => getIt<FCStore>().listOfFC.isEmpty
-            ? FutureBuilder<List<FCModel>>(
-                future: getIt<FCStore>().getFCTransactions(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<List<FCModel>> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                        child: CircularProgressIndicator(
-                            color: AppColors.darkBlue));
-                  } else if (snapshot.connectionState == ConnectionState.done) {
-                    if (snapshot.hasError) {
-                      return Center(child: Text(snapshot.error.toString()));
-                    } else if (getIt<FCStore>().listOfFC.isNotEmpty) {
-                      return ListOFTransactions();
-                    } else {
-                      return const Center(
-                          child: Text(
-                        'Нет данных',
-                        style: TextStyles.titleText14,
-                      ));
-                    }
-                  } else {
-                    return Center(
-                        child: Text('State: ${snapshot.connectionState}'));
-                  }
-                },
-              )
-            : ListOFTransactions(),
+      body: Column(
+        children: [
+          GestureDetector(
+            onTap: () async {
+              await getIt<FCStore>().downloadReportFC();
+            },
+            child: Container(
+              color: Colors.transparent,
+              padding: EdgeInsets.all(8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Отчет по FC',
+                    style: TextStyles.titleText16DarkBlue,
+                  ),
+                  Column(
+                    children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Image.asset('assets/download_icon.png', scale: 3),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            child: Observer(
+              builder: (_) => getIt<FCStore>().listOfFC.isEmpty
+                  ? FutureBuilder<List<FCModel>>(
+                      future: getIt<FCStore>().getFCTransactions(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<List<FCModel>> snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator(
+                                  color: AppColors.darkBlue));
+                        } else if (snapshot.connectionState ==
+                            ConnectionState.done) {
+                          if (snapshot.hasError) {
+                            return Center(
+                                child: Text(snapshot.error.toString()));
+                          } else if (getIt<FCStore>().listOfFC.isNotEmpty) {
+                            return ListOFTransactions();
+                          } else {
+                            return const Center(
+                                child: Text(
+                              'Нет данных',
+                              style: TextStyles.titleText14,
+                            ));
+                          }
+                        } else {
+                          return Center(
+                              child:
+                                  Text('State: ${snapshot.connectionState}'));
+                        }
+                      },
+                    )
+                  : ListOFTransactions(),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -103,7 +139,7 @@ class ContentOfAlertDialog extends StatelessWidget {
           Row(
             children: [
               SizedBox(
-                width: 150,
+                width: 112,
                 child: ListTile(
                   horizontalTitleGap: 0,
                   contentPadding: EdgeInsets.symmetric(horizontal: -4),
@@ -119,7 +155,7 @@ class ContentOfAlertDialog extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: 130,
+                width: 120,
                 child: ListTile(
                   horizontalTitleGap: 0,
                   contentPadding: EdgeInsets.symmetric(horizontal: -4),
@@ -139,7 +175,7 @@ class ContentOfAlertDialog extends StatelessWidget {
           Row(
             children: [
               SizedBox(
-                width: 150,
+                width: 112,
                 child: ListTile(
                   horizontalTitleGap: 0,
                   contentPadding: EdgeInsets.symmetric(horizontal: -4),
@@ -155,7 +191,7 @@ class ContentOfAlertDialog extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: 130,
+                width: 120,
                 child: ListTile(
                   horizontalTitleGap: 0,
                   contentPadding: EdgeInsets.symmetric(horizontal: -4),
@@ -243,7 +279,7 @@ class ListOFTransactions extends StatelessWidget {
                                     Row(
                                       children: [
                                         SizedBox(
-                                          width: 150,
+                                          width: 112,
                                           child: ListTile(
                                             horizontalTitleGap: 0,
                                             contentPadding:
@@ -263,7 +299,7 @@ class ListOFTransactions extends StatelessWidget {
                                           ),
                                         ),
                                         SizedBox(
-                                          width: 130,
+                                          width: 120,
                                           child: ListTile(
                                             horizontalTitleGap: 0,
                                             contentPadding:
@@ -287,7 +323,7 @@ class ListOFTransactions extends StatelessWidget {
                                     Row(
                                       children: [
                                         SizedBox(
-                                          width: 150,
+                                          width: 112,
                                           child: ListTile(
                                             horizontalTitleGap: 0,
                                             contentPadding:
@@ -307,7 +343,7 @@ class ListOFTransactions extends StatelessWidget {
                                           ),
                                         ),
                                         SizedBox(
-                                          width: 130,
+                                          width: 120,
                                           child: ListTile(
                                             horizontalTitleGap: 0,
                                             contentPadding:

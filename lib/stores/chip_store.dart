@@ -18,6 +18,12 @@ abstract class ChipStoreBase with Store {
   @observable
   ObservableList<ChipModel> listOfChips = ObservableList<ChipModel>();
 
+  @observable
+  bool tempIsSwitched = false;
+
+  @observable
+  double tempSliderValue = 0;
+
   @action
   void clear() {
     sliderValue = 0;
@@ -27,6 +33,31 @@ abstract class ChipStoreBase with Store {
   @action
   void switcher(bool newValue) {
     isSwitched = newValue;
+  }
+
+  @action
+  void tempSwitcher(bool newValue) {
+    tempIsSwitched = newValue;
+  }
+
+  @action
+  void setTempValues(bool isSwitched, double sliderValue) {
+    tempIsSwitched = isSwitched;
+    tempSliderValue = sliderValue;
+  }
+
+  @action
+  void changeTempSliderValue(double newValue) {
+    tempSliderValue = newValue;
+  }
+
+  @action
+  Future<void> changeChipTransation(String uuid, int index) async {
+    var chipTransaction = await _api.changeChipTransaction(
+        uuid: uuid,
+        chipCount: tempSliderValue.toInt(),
+        transactionType: tempIsSwitched == true ? 'cashless' : 'cash');
+    listOfChips[index] = chipTransaction;
   }
 
   @action
@@ -47,5 +78,11 @@ abstract class ChipStoreBase with Store {
     listOfChips.clear();
     listOfChips.addAll(await _api.getChipsTransactions());
     return listOfChips;
+  }
+
+  @action
+  Future<void> deleteTransaction(String uuid, int index) async {
+    await _api.deleteChipTransaction(uuid);
+    listOfChips.removeAt(index);
   }
 }

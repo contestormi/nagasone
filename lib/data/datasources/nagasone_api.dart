@@ -1,6 +1,7 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nagasone/data/models/chip_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:nagasone/data/models/chip_stat_model.dart';
 import 'package:nagasone/data/models/fc_model.dart';
 import 'package:nagasone/data/models/fc_stat_model.dart';
 import 'dart:convert';
@@ -8,7 +9,7 @@ import 'dart:convert';
 import 'package:nagasone/presentation/theme.dart';
 
 class NagasoneAPI {
-  static const _apiUrl = 'https://6fe3-128-72-175-2.ngrok.io';
+  static const _apiUrl = 'https://c16a-128-72-175-2.ngrok.io';
 
   Future<ChipModel> createChipTransaction({
     required int chipCount,
@@ -77,6 +78,54 @@ class NagasoneAPI {
       );
       Fluttertoast.showToast(
           msg: "Успешно создано",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: AppColors.grey,
+          textColor: AppColors.white,
+          fontSize: 12.0);
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: "$e",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: AppColors.grey,
+          textColor: AppColors.white,
+          fontSize: 12.0);
+      rethrow;
+    }
+
+    if (response.statusCode == 200) {
+      return FCModel.fromJson(
+        jsonDecode(response.body.replaceAll("\n", "")) as Map<String, dynamic>,
+      );
+    } else {
+      throw Exception(response.body);
+    }
+  }
+
+  Future<FCModel> changeFCTransaction({
+    required int amount,
+    required String transactionType,
+    required String uuid,
+  }) async {
+    final url = '$_apiUrl/transaction_fc/$uuid';
+
+    final body = <String, dynamic>{
+      'amount': amount,
+      'transactionType': transactionType,
+    };
+
+    final http.Response response;
+    try {
+      response = await http.put(
+        Uri.parse(url),
+        headers: {"Content-Type": "application/json"},
+        body: json.encode(body),
+      );
+      Fluttertoast.showToast(
+          msg: "Успешно изменено",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
@@ -191,6 +240,22 @@ class NagasoneAPI {
       return jsonResponse!
           .map((fc) => FCModel.fromJson(fc as Map<String, dynamic>))
           .toList();
+    } else {
+      throw Exception(response.body);
+    }
+  }
+
+  Future<ChipStatModel> getChipStatTransactions() async {
+    const url = '$_apiUrl/transaction_stat';
+    final http.Response response;
+    try {
+      response = await http.get(Uri.parse(url));
+    } catch (e) {
+      rethrow;
+    }
+
+    if (response.statusCode == 200) {
+      return ChipStatModel.fromJson(jsonDecode(response.body));
     } else {
       throw Exception(response.body);
     }

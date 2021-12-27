@@ -76,6 +76,7 @@ class _ChipsScreenState extends State<ChipsScreen> {
                     await getIt<ChipStore>().createChipTransation();
                   },
                   firstButtonCallback: () => Navigator.pop(context),
+                  showButtons: true,
                 );
               });
             },

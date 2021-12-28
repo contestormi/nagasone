@@ -24,7 +24,7 @@ class _FCVisitScreenState extends State<FCVisitScreen> {
         elevation: 0,
         backgroundColor: AppColors.white,
         title: const Text(
-          'Статистика посещений',
+          'Список гостей',
           style: TextStyles.titleText16,
         ),
         centerTitle: true,
@@ -41,7 +41,7 @@ class _FCVisitScreenState extends State<FCVisitScreen> {
                 ),
                 firstButtonText: 'Отмена',
                 secondButtonText: 'Подтвердить',
-                title: 'Добавить микрочела',
+                title: 'Добавить гостя',
                 secondButtonCallback: () async {
                   Navigator.pop(context);
                   await getIt<MainStore>()
@@ -117,96 +117,98 @@ class _ListOfVisitorsState extends State<ListOfVisitors> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: getIt<MainStore>().listOfVisitors.length,
-      itemBuilder: (context, index) {
-        return LabeledCheckbox(
-          label: getIt<MainStore>().listOfVisitors[index].fio,
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          value: getIt<MainStore>().listOfVisitors[index].isPassed,
-          callback: () {
-            getIt<MainStore>().setSwitcher(index);
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return CustomAlertDialog(
-                  content: Column(
-                    children: const [],
-                  ),
-                  firstButtonText: 'Удалить',
-                  secondButtonText: 'Изменить',
-                  title: 'Изменить или удалить посетителя',
-                  firstButtonCallback: () async {
-                    Navigator.pop(context);
-                    getIt<MainStore>().deleteVisitor(index);
-                  },
-                  secondButtonCallback: () async {
-                    textEditingController.text =
-                        getIt<MainStore>().listOfVisitors[index].fio;
-                    Navigator.pop(context);
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Observer(builder: (_) {
-                          return CustomAlertDialog(
-                            content: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Text(
-                                      'Прошел',
-                                      style: TextStyles.textBold14,
-                                    ),
-                                    Switch(
-                                      value: getIt<MainStore>().isSwitched,
-                                      onChanged: (value) =>
-                                          getIt<MainStore>().switcher(value),
-                                      activeTrackColor: AppColors.lightBlue,
-                                      activeColor: AppColors.darkBlue,
-                                      inactiveThumbColor: AppColors.darkBlue,
-                                      inactiveTrackColor: AppColors.lightBlue,
-                                    ),
-                                    const Text('Не прошел',
-                                        style: TextStyles.textBold14),
-                                  ],
-                                ),
-                                TextFormField(
-                                  controller: textEditingController,
-                                  decoration: const InputDecoration(
-                                    border: UnderlineInputBorder(),
-                                    labelText: 'ФИО',
+    return Observer(builder: (_) {
+      return ListView.builder(
+        itemCount: getIt<MainStore>().listOfVisitors.length,
+        itemBuilder: (context, index) {
+          return LabeledCheckbox(
+            label: getIt<MainStore>().listOfVisitors[index].fio,
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            value: getIt<MainStore>().listOfVisitors[index].isPassed,
+            callback: () {
+              getIt<MainStore>().setSwitcher(index);
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return CustomAlertDialog(
+                    content: Column(
+                      children: const [],
+                    ),
+                    firstButtonText: 'Удалить',
+                    secondButtonText: 'Изменить',
+                    title: 'Изменить или удалить гостя',
+                    firstButtonCallback: () async {
+                      Navigator.pop(context);
+                      getIt<MainStore>().deleteVisitor(index);
+                    },
+                    secondButtonCallback: () async {
+                      textEditingController.text =
+                          getIt<MainStore>().listOfVisitors[index].fio;
+                      Navigator.pop(context);
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Observer(builder: (_) {
+                            return CustomAlertDialog(
+                              content: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Text(
+                                        'Прошел',
+                                        style: TextStyles.textBold14,
+                                      ),
+                                      Switch(
+                                        value: getIt<MainStore>().isSwitched,
+                                        onChanged: (value) =>
+                                            getIt<MainStore>().switcher(value),
+                                        activeTrackColor: AppColors.lightBlue,
+                                        activeColor: AppColors.darkBlue,
+                                        inactiveThumbColor: AppColors.darkBlue,
+                                        inactiveTrackColor: AppColors.lightBlue,
+                                      ),
+                                      const Text('Не прошел',
+                                          style: TextStyles.textBold14),
+                                    ],
                                   ),
-                                ),
-                                const SizedBox(height: 10),
-                              ],
-                            ),
-                            firstButtonText: 'Отмена',
-                            secondButtonText: 'Изменить',
-                            title: 'Изменить посетителя',
-                            firstButtonCallback: () => Navigator.pop(context),
-                            showButtons: true,
-                            secondButtonCallback: () async {
-                              Navigator.pop(context);
-                              getIt<MainStore>().changeVisitor(
-                                  index, textEditingController.text);
-                            },
-                          );
-                        });
-                      },
-                    ).then((val) {
-                      textEditingController.clear();
-                      getIt<MainStore>().clear();
-                    });
-                  },
-                  showButtons: true,
-                );
-              },
-            );
-          },
-        );
-      },
-    );
+                                  TextFormField(
+                                    controller: textEditingController,
+                                    decoration: const InputDecoration(
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'ФИО',
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10),
+                                ],
+                              ),
+                              firstButtonText: 'Отмена',
+                              secondButtonText: 'Изменить',
+                              title: 'Изменить гостя',
+                              firstButtonCallback: () => Navigator.pop(context),
+                              showButtons: true,
+                              secondButtonCallback: () async {
+                                Navigator.pop(context);
+                                getIt<MainStore>().changeVisitor(
+                                    index, textEditingController.text);
+                              },
+                            );
+                          });
+                        },
+                      ).then((val) {
+                        textEditingController.clear();
+                        getIt<MainStore>().clear();
+                      });
+                    },
+                    showButtons: true,
+                  );
+                },
+              );
+            },
+          );
+        },
+      );
+    });
   }
 }
 

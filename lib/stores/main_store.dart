@@ -19,6 +19,7 @@ abstract class MainStoreBase with Store {
     if (await _api.rebuildDB()) {
       getIt<ChipStore>().listOfChips.clear();
       getIt<FCStore>().listOfFC.clear();
+      listOfVisitors.clear();
     }
   }
 

@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
                   ),
                   const PopupMenuItem(
                     value: 3,
-                    child: Text("Статистика посещений"),
+                    child: Text("Список гостей"),
                   ),
                   const PopupMenuItem(
                     value: 4,

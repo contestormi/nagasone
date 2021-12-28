@@ -24,21 +24,6 @@ mixin _$ChipStore on ChipStoreBase, Store {
     });
   }
 
-  final _$sliderValueAtom = Atom(name: 'ChipStoreBase.sliderValue');
-
-  @override
-  double get sliderValue {
-    _$sliderValueAtom.reportRead();
-    return super.sliderValue;
-  }
-
-  @override
-  set sliderValue(double value) {
-    _$sliderValueAtom.reportWrite(value, super.sliderValue, () {
-      super.sliderValue = value;
-    });
-  }
-
   final _$listOfChipsAtom = Atom(name: 'ChipStoreBase.listOfChips');
 
   @override
@@ -69,18 +54,33 @@ mixin _$ChipStore on ChipStoreBase, Store {
     });
   }
 
-  final _$tempSliderValueAtom = Atom(name: 'ChipStoreBase.tempSliderValue');
+  final _$chipsNumberAtom = Atom(name: 'ChipStoreBase.chipsNumber');
 
   @override
-  double get tempSliderValue {
-    _$tempSliderValueAtom.reportRead();
-    return super.tempSliderValue;
+  int get chipsNumber {
+    _$chipsNumberAtom.reportRead();
+    return super.chipsNumber;
   }
 
   @override
-  set tempSliderValue(double value) {
-    _$tempSliderValueAtom.reportWrite(value, super.tempSliderValue, () {
-      super.tempSliderValue = value;
+  set chipsNumber(int value) {
+    _$chipsNumberAtom.reportWrite(value, super.chipsNumber, () {
+      super.chipsNumber = value;
+    });
+  }
+
+  final _$tempChipsNumberAtom = Atom(name: 'ChipStoreBase.tempChipsNumber');
+
+  @override
+  int get tempChipsNumber {
+    _$tempChipsNumberAtom.reportRead();
+    return super.tempChipsNumber;
+  }
+
+  @override
+  set tempChipsNumber(int value) {
+    _$tempChipsNumberAtom.reportWrite(value, super.tempChipsNumber, () {
+      super.tempChipsNumber = value;
     });
   }
 
@@ -133,6 +133,61 @@ mixin _$ChipStore on ChipStoreBase, Store {
       ActionController(name: 'ChipStoreBase');
 
   @override
+  void changeChips(int chipsCount) {
+    final _$actionInfo = _$ChipStoreBaseActionController.startAction(
+        name: 'ChipStoreBase.changeChips');
+    try {
+      return super.changeChips(chipsCount);
+    } finally {
+      _$ChipStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void chipsIncrement() {
+    final _$actionInfo = _$ChipStoreBaseActionController.startAction(
+        name: 'ChipStoreBase.chipsIncrement');
+    try {
+      return super.chipsIncrement();
+    } finally {
+      _$ChipStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void chipsTempIncrement() {
+    final _$actionInfo = _$ChipStoreBaseActionController.startAction(
+        name: 'ChipStoreBase.chipsTempIncrement');
+    try {
+      return super.chipsTempIncrement();
+    } finally {
+      _$ChipStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void chipsTempDecrement() {
+    final _$actionInfo = _$ChipStoreBaseActionController.startAction(
+        name: 'ChipStoreBase.chipsTempDecrement');
+    try {
+      return super.chipsTempDecrement();
+    } finally {
+      _$ChipStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void chipsDecrement() {
+    final _$actionInfo = _$ChipStoreBaseActionController.startAction(
+        name: 'ChipStoreBase.chipsDecrement');
+    try {
+      return super.chipsDecrement();
+    } finally {
+      _$ChipStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void clear() {
     final _$actionInfo = _$ChipStoreBaseActionController.startAction(
         name: 'ChipStoreBase.clear');
@@ -166,33 +221,22 @@ mixin _$ChipStore on ChipStoreBase, Store {
   }
 
   @override
-  void setTempValues(bool isSwitched, double sliderValue) {
+  void setTempValues(bool isSwitched, int chipNumber) {
     final _$actionInfo = _$ChipStoreBaseActionController.startAction(
         name: 'ChipStoreBase.setTempValues');
     try {
-      return super.setTempValues(isSwitched, sliderValue);
+      return super.setTempValues(isSwitched, chipNumber);
     } finally {
       _$ChipStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void changeTempSliderValue(double newValue) {
+  void changeTempChipsValue(int newValue) {
     final _$actionInfo = _$ChipStoreBaseActionController.startAction(
-        name: 'ChipStoreBase.changeTempSliderValue');
+        name: 'ChipStoreBase.changeTempChipsValue');
     try {
-      return super.changeTempSliderValue(newValue);
-    } finally {
-      _$ChipStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void changeSliderValue(double newValue) {
-    final _$actionInfo = _$ChipStoreBaseActionController.startAction(
-        name: 'ChipStoreBase.changeSliderValue');
-    try {
-      return super.changeSliderValue(newValue);
+      return super.changeTempChipsValue(newValue);
     } finally {
       _$ChipStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -202,10 +246,10 @@ mixin _$ChipStore on ChipStoreBase, Store {
   String toString() {
     return '''
 isSwitched: ${isSwitched},
-sliderValue: ${sliderValue},
 listOfChips: ${listOfChips},
 tempIsSwitched: ${tempIsSwitched},
-tempSliderValue: ${tempSliderValue}
+chipsNumber: ${chipsNumber},
+tempChipsNumber: ${tempChipsNumber}
     ''';
   }
 }

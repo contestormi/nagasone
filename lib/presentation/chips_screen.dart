@@ -42,48 +42,7 @@ class _ChipsScreenState extends State<ChipsScreen> {
             builder: (BuildContext context) {
               return Observer(builder: (_) {
                 return CustomAlertDialog(
-                  content: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'НАЛ',
-                            style: TextStyles.textBold14,
-                          ),
-                          Switch(
-                            value: getIt<ChipStore>().isSwitched,
-                            onChanged: (value) =>
-                                getIt<ChipStore>().switcher(value),
-                            activeTrackColor: AppColors.lightBlue,
-                            activeColor: AppColors.darkBlue,
-                            inactiveThumbColor: AppColors.darkBlue,
-                            inactiveTrackColor: AppColors.lightBlue,
-                          ),
-                          const Text('БЕЗНАЛ', style: TextStyles.textBold14),
-                        ],
-                      ),
-                      Text(
-                        'Фишек: ${getIt<ChipStore>().sliderValue.toInt().toString()}',
-                        style: TextStyles.titleText20,
-                      ),
-                      Slider(
-                        inactiveColor: AppColors.lightBlue,
-                        activeColor: AppColors.darkBlue,
-                        divisions: 100,
-                        min: 0.0,
-                        max: 100.0,
-                        value: getIt<ChipStore>().sliderValue,
-                        onChanged: (value) =>
-                            getIt<ChipStore>().changeSliderValue(value),
-                      ),
-                      Text(
-                        'Рублей: ${calculateRubles(getIt<ChipStore>().sliderValue.toInt())}',
-                        style: TextStyles.titleText20,
-                      ),
-                      const SizedBox(height: 15)
-                    ],
-                  ),
+                  content: const ChipBody(),
                   firstButtonText: 'Отмена',
                   secondButtonText: 'Подтвердить',
                   title: 'Добавить операцию с фишками',
@@ -174,6 +133,294 @@ class _ChipsScreenState extends State<ChipsScreen> {
   }
 }
 
+class ChipBody extends StatelessWidget {
+  const ChipBody({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Observer(builder: (context) {
+      return Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'НАЛ',
+                style: TextStyles.textBold14,
+              ),
+              Switch(
+                value: getIt<ChipStore>().isSwitched,
+                onChanged: (value) => getIt<ChipStore>().switcher(value),
+                activeTrackColor: AppColors.lightBlue,
+                activeColor: AppColors.darkBlue,
+                inactiveThumbColor: AppColors.darkBlue,
+                inactiveTrackColor: AppColors.lightBlue,
+              ),
+              const Text('БЕЗНАЛ', style: TextStyles.textBold14),
+            ],
+          ),
+          SizedBox(
+            width: 180,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  height: 56,
+                  width: 56,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      getIt<ChipStore>().changeChips(1);
+                    },
+                    child: const Text('1', style: TextStyles.text14White),
+                    style: ButtonStyle(
+                      elevation: MaterialStateProperty.all<double>(0),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(AppColors.darkBlue),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 56,
+                  width: 56,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      getIt<ChipStore>().changeChips(5);
+                    },
+                    child: const Text('5', style: TextStyles.text14White),
+                    style: ButtonStyle(
+                      elevation: MaterialStateProperty.all<double>(0),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(AppColors.darkBlue),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 56,
+                  width: 56,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      getIt<ChipStore>().changeChips(10);
+                    },
+                    child: const Text('10', style: TextStyles.text14White),
+                    style: ButtonStyle(
+                      elevation: MaterialStateProperty.all<double>(0),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(AppColors.darkBlue),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          SizedBox(
+            width: 180,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  height: 56,
+                  width: 56,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      getIt<ChipStore>().changeChips(15);
+                    },
+                    child: const Text('15', style: TextStyles.text14White),
+                    style: ButtonStyle(
+                      elevation: MaterialStateProperty.all<double>(0),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(AppColors.darkBlue),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 56,
+                  width: 56,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      getIt<ChipStore>().changeChips(20);
+                    },
+                    child: const Text('20', style: TextStyles.text14White),
+                    style: ButtonStyle(
+                      elevation: MaterialStateProperty.all<double>(0),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(AppColors.darkBlue),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 56,
+                  width: 56,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      getIt<ChipStore>().changeChips(30);
+                    },
+                    child: const Text('30', style: TextStyles.text14White),
+                    style: ButtonStyle(
+                      elevation: MaterialStateProperty.all<double>(0),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(AppColors.darkBlue),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          SizedBox(
+            width: 180,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  height: 56,
+                  width: 56,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      getIt<ChipStore>().changeChips(50);
+                    },
+                    child: const Text('50', style: TextStyles.text14White),
+                    style: ButtonStyle(
+                      elevation: MaterialStateProperty.all<double>(0),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(AppColors.darkBlue),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 56,
+                  width: 56,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      getIt<ChipStore>().changeChips(75);
+                    },
+                    child: const Text('75', style: TextStyles.text14White),
+                    style: ButtonStyle(
+                      elevation: MaterialStateProperty.all<double>(0),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(AppColors.darkBlue),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 56,
+                  width: 56,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      getIt<ChipStore>().changeChips(100);
+                    },
+                    child: const Text('100', style: TextStyles.text14White),
+                    style: ButtonStyle(
+                      elevation: MaterialStateProperty.all<double>(0),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(AppColors.darkBlue),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              SizedBox(
+                width: 41,
+                height: 41,
+                child: FloatingActionButton(
+                    onPressed: () {
+                      getIt<ChipStore>().chipsDecrement();
+                    },
+                    child: const Icon(Icons.remove),
+                    backgroundColor: AppColors.darkBlue),
+              ),
+              SizedBox(
+                width: 150,
+                child: Column(
+                  children: [
+                    Text(
+                      'Фишек: ${getIt<ChipStore>().chipsNumber}',
+                      style: TextStyles.titleText16,
+                    ),
+                    Text(
+                      'Рублей: ${calculateRubles(getIt<ChipStore>().chipsNumber)}',
+                      style: TextStyles.titleText16,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                width: 41,
+                height: 41,
+                child: FloatingActionButton(
+                    onPressed: () {
+                      getIt<ChipStore>().chipsIncrement();
+                    },
+                    child: const Icon(Icons.add),
+                    backgroundColor: AppColors.darkBlue),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20)
+        ],
+      );
+    });
+  }
+}
+
 class ListOfChips extends StatelessWidget {
   const ListOfChips({
     Key? key,
@@ -206,10 +453,7 @@ class ListOfChips extends StatelessWidget {
                                     'cash'
                                 ? false
                                 : true,
-                            getIt<ChipStore>()
-                                .listOfChips[index]
-                                .chipCount
-                                .toDouble());
+                            getIt<ChipStore>().listOfChips[index].chipCount);
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
@@ -242,23 +486,390 @@ class ListOfChips extends StatelessWidget {
                                             style: TextStyles.textBold14),
                                       ],
                                     ),
-                                    Text(
-                                      'Фишек: ${getIt<ChipStore>().tempSliderValue.toInt().toString()}',
-                                      style: TextStyles.titleText20,
-                                    ),
-                                    Slider(
-                                      inactiveColor: AppColors.lightBlue,
-                                      activeColor: AppColors.darkBlue,
-                                      divisions: 100,
-                                      min: 0.0,
-                                      max: 100.0,
-                                      value: getIt<ChipStore>().tempSliderValue,
-                                      onChanged: (value) => getIt<ChipStore>()
-                                          .changeTempSliderValue(value),
-                                    ),
-                                    Text(
-                                      'Рублей: ${calculateRubles(getIt<ChipStore>().tempSliderValue.toInt())}',
-                                      style: TextStyles.titleText20,
+                                    Column(
+                                      children: [
+                                        SizedBox(
+                                          width: 180,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              SizedBox(
+                                                height: 56,
+                                                width: 56,
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    getIt<ChipStore>()
+                                                        .changeTempChipsValue(
+                                                            1);
+                                                  },
+                                                  child: const Text('1',
+                                                      style: TextStyles
+                                                          .text14White),
+                                                  style: ButtonStyle(
+                                                    elevation:
+                                                        MaterialStateProperty
+                                                            .all<double>(0),
+                                                    backgroundColor:
+                                                        MaterialStateProperty
+                                                            .all<Color>(
+                                                                AppColors
+                                                                    .darkBlue),
+                                                    shape: MaterialStateProperty
+                                                        .all<
+                                                            RoundedRectangleBorder>(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 56,
+                                                width: 56,
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    getIt<ChipStore>()
+                                                        .changeTempChipsValue(
+                                                            5);
+                                                  },
+                                                  child: const Text('5',
+                                                      style: TextStyles
+                                                          .text14White),
+                                                  style: ButtonStyle(
+                                                    elevation:
+                                                        MaterialStateProperty
+                                                            .all<double>(0),
+                                                    backgroundColor:
+                                                        MaterialStateProperty
+                                                            .all<Color>(
+                                                                AppColors
+                                                                    .darkBlue),
+                                                    shape: MaterialStateProperty
+                                                        .all<
+                                                            RoundedRectangleBorder>(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 56,
+                                                width: 56,
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    getIt<ChipStore>()
+                                                        .changeTempChipsValue(
+                                                            10);
+                                                  },
+                                                  child: const Text('10',
+                                                      style: TextStyles
+                                                          .text14White),
+                                                  style: ButtonStyle(
+                                                    elevation:
+                                                        MaterialStateProperty
+                                                            .all<double>(0),
+                                                    backgroundColor:
+                                                        MaterialStateProperty
+                                                            .all<Color>(
+                                                                AppColors
+                                                                    .darkBlue),
+                                                    shape: MaterialStateProperty
+                                                        .all<
+                                                            RoundedRectangleBorder>(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        SizedBox(
+                                          width: 180,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              SizedBox(
+                                                height: 56,
+                                                width: 56,
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    getIt<ChipStore>()
+                                                        .changeTempChipsValue(
+                                                            15);
+                                                  },
+                                                  child: const Text('15',
+                                                      style: TextStyles
+                                                          .text14White),
+                                                  style: ButtonStyle(
+                                                    elevation:
+                                                        MaterialStateProperty
+                                                            .all<double>(0),
+                                                    backgroundColor:
+                                                        MaterialStateProperty
+                                                            .all<Color>(
+                                                                AppColors
+                                                                    .darkBlue),
+                                                    shape: MaterialStateProperty
+                                                        .all<
+                                                            RoundedRectangleBorder>(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 56,
+                                                width: 56,
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    getIt<ChipStore>()
+                                                        .changeTempChipsValue(
+                                                            20);
+                                                  },
+                                                  child: const Text('20',
+                                                      style: TextStyles
+                                                          .text14White),
+                                                  style: ButtonStyle(
+                                                    elevation:
+                                                        MaterialStateProperty
+                                                            .all<double>(0),
+                                                    backgroundColor:
+                                                        MaterialStateProperty
+                                                            .all<Color>(
+                                                                AppColors
+                                                                    .darkBlue),
+                                                    shape: MaterialStateProperty
+                                                        .all<
+                                                            RoundedRectangleBorder>(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 56,
+                                                width: 56,
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    getIt<ChipStore>()
+                                                        .changeTempChipsValue(
+                                                            30);
+                                                  },
+                                                  child: const Text('30',
+                                                      style: TextStyles
+                                                          .text14White),
+                                                  style: ButtonStyle(
+                                                    elevation:
+                                                        MaterialStateProperty
+                                                            .all<double>(0),
+                                                    backgroundColor:
+                                                        MaterialStateProperty
+                                                            .all<Color>(
+                                                                AppColors
+                                                                    .darkBlue),
+                                                    shape: MaterialStateProperty
+                                                        .all<
+                                                            RoundedRectangleBorder>(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        SizedBox(
+                                          width: 180,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              SizedBox(
+                                                height: 56,
+                                                width: 56,
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    getIt<ChipStore>()
+                                                        .changeTempChipsValue(
+                                                            50);
+                                                  },
+                                                  child: const Text('50',
+                                                      style: TextStyles
+                                                          .text14White),
+                                                  style: ButtonStyle(
+                                                    elevation:
+                                                        MaterialStateProperty
+                                                            .all<double>(0),
+                                                    backgroundColor:
+                                                        MaterialStateProperty
+                                                            .all<Color>(
+                                                                AppColors
+                                                                    .darkBlue),
+                                                    shape: MaterialStateProperty
+                                                        .all<
+                                                            RoundedRectangleBorder>(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 56,
+                                                width: 56,
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    getIt<ChipStore>()
+                                                        .changeTempChipsValue(
+                                                            75);
+                                                  },
+                                                  child: const Text('75',
+                                                      style: TextStyles
+                                                          .text14White),
+                                                  style: ButtonStyle(
+                                                    elevation:
+                                                        MaterialStateProperty
+                                                            .all<double>(0),
+                                                    backgroundColor:
+                                                        MaterialStateProperty
+                                                            .all<Color>(
+                                                                AppColors
+                                                                    .darkBlue),
+                                                    shape: MaterialStateProperty
+                                                        .all<
+                                                            RoundedRectangleBorder>(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 56,
+                                                width: 56,
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    getIt<ChipStore>()
+                                                        .changeTempChipsValue(
+                                                            100);
+                                                  },
+                                                  child: const Text('100',
+                                                      style: TextStyles
+                                                          .text14White),
+                                                  style: ButtonStyle(
+                                                    elevation:
+                                                        MaterialStateProperty
+                                                            .all<double>(0),
+                                                    backgroundColor:
+                                                        MaterialStateProperty
+                                                            .all<Color>(
+                                                                AppColors
+                                                                    .darkBlue),
+                                                    shape: MaterialStateProperty
+                                                        .all<
+                                                            RoundedRectangleBorder>(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            SizedBox(
+                                              height: 41,
+                                              width: 41,
+                                              child: FloatingActionButton(
+                                                  onPressed: () {
+                                                    getIt<ChipStore>()
+                                                        .chipsTempDecrement();
+                                                  },
+                                                  child: const Icon(Icons.remove),
+                                                  backgroundColor:
+                                                      AppColors.darkBlue),
+                                            ),
+                                            SizedBox(
+                                              width: 150,
+                                              child: Column(
+                                                children: [
+                                                  Text(
+                                                    'Фишек: ${getIt<ChipStore>().tempChipsNumber}',
+                                                    style:
+                                                        TextStyles.titleText16,
+                                                  ),
+                                                  Text(
+                                                    'Рублей: ${calculateRubles(getIt<ChipStore>().tempChipsNumber)}',
+                                                    style:
+                                                        TextStyles.titleText16,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 41,
+                                              width: 41,
+                                              child: FloatingActionButton(
+                                                  onPressed: () {
+                                                    getIt<ChipStore>()
+                                                        .chipsTempIncrement();
+                                                  },
+                                                  child: const Icon(Icons.add),
+                                                  backgroundColor:
+                                                      AppColors.darkBlue),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 20)
+                                      ],
                                     ),
                                     const SizedBox(height: 15)
                                   ],

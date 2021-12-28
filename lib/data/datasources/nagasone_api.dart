@@ -6,6 +6,7 @@ import 'package:nagasone/data/models/chip_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:nagasone/data/models/chip_stat_model.dart';
 import 'package:nagasone/data/models/fc_model.dart';
+import 'package:nagasone/data/models/visitor_model.dart';
 import 'dart:convert';
 import 'dart:math';
 
@@ -18,6 +19,143 @@ import '../models/fc_stat_model.dart';
 class NagasoneAPI {
   static const _apiUrl = 'http://35.214.202.118';
   final dio = Dio();
+
+  Future<void> deleteVisitor(int id) async {
+    final url = '$_apiUrl/deleteFCMember/$id';
+    final http.Response response;
+    try {
+      response =
+          await http.delete(Uri.parse(url)).timeout(const Duration(seconds: 5));
+    } catch (e) {
+      rethrow;
+    }
+
+    if (response.statusCode == 200) {
+      Fluttertoast.showToast(
+          msg: "Удален",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: AppColors.grey,
+          textColor: AppColors.white,
+          fontSize: 12.0);
+    } else {
+      throw Exception(response.body);
+    }
+  }
+
+  Future<VisitorModel> createVisitor({
+    required String fio,
+  }) async {
+    const url = '$_apiUrl/add2FCList';
+
+    final body = <String, dynamic>{
+      'fio': fio,
+    };
+
+    final http.Response response;
+    try {
+      response = await http.post(
+        Uri.parse(url),
+        headers: {"Content-Type": "application/json"},
+        body: json.encode(body),
+      );
+      Fluttertoast.showToast(
+          msg: "Успешно создан",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: AppColors.grey,
+          textColor: AppColors.white,
+          fontSize: 12.0);
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: "$e",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: AppColors.grey,
+          textColor: AppColors.white,
+          fontSize: 12.0);
+      rethrow;
+    }
+
+    if (response.statusCode == 200) {
+      return VisitorModel.fromJson(
+        jsonDecode(response.body.replaceAll("\n", "")) as Map<String, dynamic>,
+      );
+    } else {
+      throw Exception(response.body);
+    }
+  }
+
+  Future<List<VisitorModel>> getVistirosList() async {
+    const url = '$_apiUrl/getFCList';
+    final http.Response response;
+    try {
+      response =
+          await http.get(Uri.parse(url)).timeout(const Duration(seconds: 5));
+    } catch (e) {
+      rethrow;
+    }
+
+    if (response.statusCode == 200) {
+      final List? jsonResponse = jsonDecode(response.body) as List<dynamic>?;
+      return jsonResponse!
+          .map((fc) => VisitorModel.fromJson(fc as Map<String, dynamic>))
+          .toList();
+    } else {
+      throw Exception(response.body);
+    }
+  }
+
+  Future<VisitorModel> changeVisitor({
+    required int id,
+    required String fio,
+    required String isPassed,
+  }) async {
+    final url = '$_apiUrl/editFCMember/$id';
+
+    final body = <String, dynamic>{
+      'fio': fio,
+      'isPassed': isPassed,
+    };
+
+    final http.Response response;
+    try {
+      response = await http.put(
+        Uri.parse(url),
+        headers: {"Content-Type": "application/json"},
+        body: json.encode(body),
+      );
+      Fluttertoast.showToast(
+          msg: "Успешно изменен",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: AppColors.grey,
+          textColor: AppColors.white,
+          fontSize: 12.0);
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: "$e",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: AppColors.grey,
+          textColor: AppColors.white,
+          fontSize: 12.0);
+      rethrow;
+    }
+
+    if (response.statusCode == 200) {
+      return VisitorModel.fromJson(
+        jsonDecode(response.body.replaceAll("\n", "")) as Map<String, dynamic>,
+      );
+    } else {
+      throw Exception(response.body);
+    }
+  }
 
   Future<void> downloadFCReport() async {
     Random ran = Random();

@@ -6,6 +6,7 @@ import 'package:nagasone/data/models/chip_stat_model.dart';
 import 'package:nagasone/data/models/fc_stat_model.dart';
 import 'package:nagasone/presentation/chips_screen.dart';
 import 'package:nagasone/presentation/fc_screen.dart';
+import 'package:nagasone/presentation/fc_visits_screen.dart';
 import 'package:nagasone/presentation/theme.dart';
 import 'package:nagasone/stores/chip_store.dart';
 import 'package:nagasone/stores/fc_store.dart';
@@ -65,7 +66,7 @@ class MyApp extends StatelessWidget {
                   ),
                   const PopupMenuItem(
                     value: 3,
-                    child: Text("Поменять юрлу"),
+                    child: Text("Статистика посещений"),
                   ),
                   const PopupMenuItem(
                     value: 4,
@@ -112,114 +113,133 @@ class MyApp extends StatelessWidget {
     TextEditingController _textEditingController = TextEditingController();
     switch (value) {
       case 1:
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return CustomAlertDialog(
-              content: Column(
-                children: [
-                  TextFormField(
-                    controller: _textEditingController,
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Введите пароль',
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                ],
-              ),
-              firstButtonText: 'Отмена',
-              secondButtonText: 'Подтвердить',
-              title: 'Введите пароль для ребилда БД',
-              secondButtonCallback: () {
-                if (_textEditingController.text == 'ggaassoonn') {
-                  getIt<MainStore>().rebuildDB();
-                  Navigator.pop(context);
-                } else {
-                  Fluttertoast.showToast(
-                      msg: "Неправильный пароль",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.BOTTOM,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: AppColors.grey,
-                      textColor: AppColors.white,
-                      fontSize: 12.0);
-                }
-              },
-              firstButtonCallback: () => Navigator.pop(context),
-              showButtons: true,
-            );
-          },
-        );
+        rebuildDB(context, _textEditingController);
         break;
       case 2:
         getIt<MainStore>().createDump();
         break;
-      case 4:
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return CustomAlertDialog(
-              content: Observer(builder: (_) {
-                return FutureBuilder<ChipStatModel>(
-                    future: getIt<MainStore>().getChipStatTransactions(),
-                    builder: (context, snapshot) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                              'Количество фишек за нал: ${snapshot.hasData ? snapshot.data!.cashChipCount.toString() : 0.toString()}'),
-                          Text(
-                              'Количество фишек за безнал: ${snapshot.hasData ? snapshot.data!.cashlessChipCount.toString() : 0.toString()}'),
-                          Text(
-                              'Сумма платежей за нал: ${snapshot.hasData ? snapshot.data!.cashSum.toString() : 0.toString()}'),
-                          Text(
-                              'Сумма платежей за безнал: ${snapshot.hasData ? snapshot.data!.cashlessSum.toString() : 0.toString()}'),
-                        ],
-                      );
-                    });
-              }),
-              firstButtonText: '',
-              secondButtonText: '',
-              title: 'Стата по фишкам',
-              secondButtonCallback: () {},
-              firstButtonCallback: () {},
-              showButtons: false,
-            );
-          },
+      case 3:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => FCVisitScreen()),
         );
+        break;
+      case 4:
+        showChipsStat(context);
         break;
       case 5:
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return CustomAlertDialog(
-              content: Observer(builder: (_) {
-                return FutureBuilder<FCStatModel>(
-                    future: getIt<MainStore>().getFCStatTransactions(),
-                    builder: (context, snapshot) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                              'Сумма платежей за нал: ${snapshot.hasData ? snapshot.data!.cashFcSum.toString() : 0.toString()}'),
-                          Text(
-                              'Сумма платежей за безнал: ${snapshot.hasData ? snapshot.data!.cashlessFcSum.toString() : 0.toString()}'),
-                        ],
-                      );
-                    });
-              }),
-              firstButtonText: '',
-              secondButtonText: '',
-              title: 'Стата по FC',
-              secondButtonCallback: () {},
-              firstButtonCallback: () {},
-              showButtons: false,
-            );
-          },
-        );
+        showFCStat(context);
         break;
       default:
+        break;
     }
+  }
+
+  void showFCStat(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return CustomAlertDialog(
+            content: Observer(builder: (_) {
+              return FutureBuilder<FCStatModel>(
+                  future: getIt<MainStore>().getFCStatTransactions(),
+                  builder: (context, snapshot) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                            'Сумма платежей за нал: ${snapshot.hasData ? snapshot.data!.cashFcSum.toString() : 0.toString()}'),
+                        Text(
+                            'Сумма платежей за безнал: ${snapshot.hasData ? snapshot.data!.cashlessFcSum.toString() : 0.toString()}'),
+                      ],
+                    );
+                  });
+            }),
+            firstButtonText: '',
+            secondButtonText: '',
+            title: 'Стата по FC',
+            secondButtonCallback: () {},
+            firstButtonCallback: () {},
+            showButtons: false,
+          );
+        });
+  }
+
+  void showChipsStat(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CustomAlertDialog(
+          content: Observer(builder: (_) {
+            return FutureBuilder<ChipStatModel>(
+                future: getIt<MainStore>().getChipStatTransactions(),
+                builder: (context, snapshot) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                          'Количество фишек за нал: ${snapshot.hasData ? snapshot.data!.cashChipCount.toString() : 0.toString()}'),
+                      Text(
+                          'Количество фишек за безнал: ${snapshot.hasData ? snapshot.data!.cashlessChipCount.toString() : 0.toString()}'),
+                      Text(
+                          'Сумма платежей за нал: ${snapshot.hasData ? snapshot.data!.cashSum.toString() : 0.toString()}'),
+                      Text(
+                          'Сумма платежей за безнал: ${snapshot.hasData ? snapshot.data!.cashlessSum.toString() : 0.toString()}'),
+                    ],
+                  );
+                });
+          }),
+          firstButtonText: '',
+          secondButtonText: '',
+          title: 'Стата по фишкам',
+          secondButtonCallback: () {},
+          firstButtonCallback: () {},
+          showButtons: false,
+        );
+      },
+    );
+  }
+
+  void rebuildDB(
+      BuildContext context, TextEditingController textEditingController) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CustomAlertDialog(
+          content: Column(
+            children: [
+              TextFormField(
+                controller: textEditingController,
+                decoration: const InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: 'Введите пароль',
+                ),
+              ),
+              SizedBox(height: 20),
+            ],
+          ),
+          firstButtonText: 'Отмена',
+          secondButtonText: 'Подтвердить',
+          title: 'Введите пароль для ребилда БД',
+          secondButtonCallback: () {
+            if (textEditingController.text == 'ggaassoonn') {
+              getIt<MainStore>().rebuildDB();
+              Navigator.pop(context);
+            } else {
+              Fluttertoast.showToast(
+                  msg: "Неправильный пароль",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: AppColors.grey,
+                  textColor: AppColors.white,
+                  fontSize: 12.0);
+            }
+          },
+          firstButtonCallback: () => Navigator.pop(context),
+          showButtons: true,
+        );
+      },
+    );
   }
 }

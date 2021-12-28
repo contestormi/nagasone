@@ -96,6 +96,17 @@ mixin _$MainStore on MainStoreBase, Store {
       ActionController(name: 'MainStoreBase');
 
   @override
+  void setSwitcher(dynamic index) {
+    final _$actionInfo = _$MainStoreBaseActionController.startAction(
+        name: 'MainStoreBase.setSwitcher');
+    try {
+      return super.setSwitcher(index);
+    } finally {
+      _$MainStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void switcher(bool newValue) {
     final _$actionInfo = _$MainStoreBaseActionController.startAction(
         name: 'MainStoreBase.switcher');

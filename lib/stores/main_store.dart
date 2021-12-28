@@ -26,6 +26,11 @@ abstract class MainStoreBase with Store {
   bool isSwitched = false;
 
   @action
+  void setSwitcher(index) {
+    isSwitched = !listOfVisitors[index].isPassed;
+  }
+
+  @action
   void switcher(bool newValue) {
     isSwitched = newValue;
   }
@@ -76,8 +81,6 @@ abstract class MainStoreBase with Store {
   @action
   Future<void> changeVisitor(int index, String fio) async {
     listOfVisitors[index] = await _api.changeVisitor(
-        id: listOfVisitors[index].id,
-        fio: fio,
-        isPassed: listOfVisitors[index].isPassed.toString());
+        id: listOfVisitors[index].id, fio: fio, isPassed: !isSwitched);
   }
 }

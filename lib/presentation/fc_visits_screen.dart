@@ -15,7 +15,7 @@ class FCVisitScreen extends StatefulWidget {
 }
 
 class _FCVisitScreenState extends State<FCVisitScreen> {
-  TextEditingController _textEditingController = TextEditingController();
+  final TextEditingController _textEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class _FCVisitScreenState extends State<FCVisitScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: AppColors.white,
-        title: Text(
+        title: const Text(
           'Статистика посещений',
           style: TextStyles.titleText16,
         ),
@@ -77,11 +77,11 @@ class _FCVisitScreenState extends State<FCVisitScreen> {
                         } else if (getIt<MainStore>()
                             .listOfVisitors
                             .isNotEmpty) {
-                          return Expanded(child: ListOfVisitors());
+                          return const Expanded(child: ListOfVisitors());
                         } else {
-                          return Padding(
-                            padding: const EdgeInsets.only(top: 10),
-                            child: const Center(
+                          return const Padding(
+                            padding: EdgeInsets.only(top: 10),
+                            child: Center(
                                 child: Text(
                               'Нет данных',
                               style: TextStyles.titleText14,
@@ -94,8 +94,8 @@ class _FCVisitScreenState extends State<FCVisitScreen> {
                       }
                     },
                   )
-                : Expanded(child: ListOfVisitors()),
-            SizedBox(height: 10)
+                : const Expanded(child: ListOfVisitors()),
+            const SizedBox(height: 10)
           ],
         );
       }),
@@ -123,15 +123,15 @@ class _ListOfVisitorsState extends State<ListOfVisitors> {
         return LabeledCheckbox(
           label: getIt<MainStore>().listOfVisitors[index].fio,
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          value:
-              getIt<MainStore>().listOfVisitors[index].isPassed ? true : false,
-          onChanged: (bool newValue) {
+          value: getIt<MainStore>().listOfVisitors[index].isPassed,
+          callback: () {
+            getIt<MainStore>().setSwitcher(index);
             showDialog(
               context: context,
               builder: (BuildContext context) {
                 return CustomAlertDialog(
                   content: Column(
-                    children: [],
+                    children: const [],
                   ),
                   firstButtonText: 'Удалить',
                   secondButtonText: 'Изменить',
@@ -178,7 +178,7 @@ class _ListOfVisitorsState extends State<ListOfVisitors> {
                                     labelText: 'ФИО',
                                   ),
                                 ),
-                                SizedBox(height: 10),
+                                const SizedBox(height: 10),
                               ],
                             ),
                             firstButtonText: 'Отмена',
@@ -228,7 +228,7 @@ class ContentOfDialog extends StatelessWidget {
               labelText: 'Введите ФИО',
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
         ],

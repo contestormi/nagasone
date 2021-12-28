@@ -30,7 +30,7 @@ void main() async {
   );
 
   runApp(
-    MaterialApp(home: const MyApp(), debugShowCheckedModeBanner: false),
+    const MaterialApp(home: MyApp(), debugShowCheckedModeBanner: false),
   );
   WidgetsFlutterBinding.ensureInitialized();
 }
@@ -98,7 +98,7 @@ class MyApp extends StatelessWidget {
               style: TextStyles.titleText16,
             ),
           ),
-          body: TabBarView(
+          body: const TabBarView(
             children: [
               FCScreen(),
               ChipsScreen(),
@@ -121,7 +121,7 @@ class MyApp extends StatelessWidget {
       case 3:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => FCVisitScreen()),
+          MaterialPageRoute(builder: (context) => const FCVisitScreen()),
         );
         break;
       case 4:
@@ -215,7 +215,7 @@ class MyApp extends StatelessWidget {
                   labelText: 'Введите пароль',
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
             ],
           ),
           firstButtonText: 'Отмена',

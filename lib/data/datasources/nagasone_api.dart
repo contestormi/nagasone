@@ -112,7 +112,7 @@ class NagasoneAPI {
   Future<VisitorModel> changeVisitor({
     required int id,
     required String fio,
-    required String isPassed,
+    required bool isPassed,
   }) async {
     final url = '$_apiUrl/editFCMember/$id';
 
@@ -176,7 +176,7 @@ class NagasoneAPI {
       Directory(documentsPath)
           .create(recursive: true)
           .then((Directory directory) async {
-        Response response = await dio.download(
+        await dio.download(
           '$_apiUrl/fc/Transaction_fc.csv',
           '${directory.path}/Transaction_fc${DateTimeService.formatDate(DateTime.now().toString())}${ran.nextInt(1000)}.csv',
           options: Options(
@@ -194,7 +194,7 @@ class NagasoneAPI {
           textColor: AppColors.white,
           fontSize: 12.0);
     } catch (e) {
-      print(e);
+      throw Exception(e);
     }
   }
 
@@ -217,7 +217,7 @@ class NagasoneAPI {
       Directory(documentsPath)
           .create(recursive: true)
           .then((Directory directory) async {
-        Response response = await dio.download(
+        await dio.download(
           '$_apiUrl/tr/Transaction_chip.csv',
           '${directory.path}/Transaction_chip${DateTimeService.formatDate(DateTime.now().toString())}${ran.nextInt(1000)}.csv',
           options: Options(
@@ -235,7 +235,7 @@ class NagasoneAPI {
           textColor: AppColors.white,
           fontSize: 12.0);
     } catch (e) {
-      print(e);
+      throw Exception(e);
     }
   }
 

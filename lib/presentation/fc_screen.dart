@@ -20,7 +20,7 @@ class FCScreen extends StatelessWidget {
             context: context,
             builder: (BuildContext context) {
               return CustomAlertDialog(
-                content: ContentOfAlertDialog(),
+                content: const ContentOfAlertDialog(),
                 firstButtonText: 'Отмена',
                 secondButtonText: 'Подтвердить',
                 title: 'Добавить операцию с FC',
@@ -46,17 +46,17 @@ class FCScreen extends StatelessWidget {
             },
             child: Container(
               color: Colors.transparent,
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     'Отчет по FC',
                     style: TextStyles.titleText16DarkBlue,
                   ),
                   Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Image.asset('assets/download_icon.png', scale: 3),
@@ -84,7 +84,7 @@ class FCScreen extends StatelessWidget {
                             return Center(
                                 child: Text(snapshot.error.toString()));
                           } else if (getIt<FCStore>().listOfFC.isNotEmpty) {
-                            return ListOFTransactions();
+                            return const ListOFTransactions();
                           } else {
                             return const Center(
                                 child: Text(
@@ -99,7 +99,7 @@ class FCScreen extends StatelessWidget {
                         }
                       },
                     )
-                  : ListOFTransactions(),
+                  : const ListOFTransactions(),
             ),
           ),
         ],
@@ -142,8 +142,8 @@ class ContentOfAlertDialog extends StatelessWidget {
                 width: 112,
                 child: ListTile(
                   horizontalTitleGap: 0,
-                  contentPadding: EdgeInsets.symmetric(horizontal: -4),
-                  title: Text("free"),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: -4),
+                  title: const Text("free"),
                   leading: Radio(
                     value: 1,
                     groupValue: getIt<FCStore>().val,
@@ -158,8 +158,8 @@ class ContentOfAlertDialog extends StatelessWidget {
                 width: 120,
                 child: ListTile(
                   horizontalTitleGap: 0,
-                  contentPadding: EdgeInsets.symmetric(horizontal: -4),
-                  title: Text("400 руб."),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: -4),
+                  title: const Text("400 руб."),
                   leading: Radio(
                     value: 2,
                     groupValue: getIt<FCStore>().val,
@@ -178,8 +178,8 @@ class ContentOfAlertDialog extends StatelessWidget {
                 width: 112,
                 child: ListTile(
                   horizontalTitleGap: 0,
-                  contentPadding: EdgeInsets.symmetric(horizontal: -4),
-                  title: Text("900 руб."),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: -4),
+                  title: const Text("900 руб."),
                   leading: Radio(
                     value: 3,
                     groupValue: getIt<FCStore>().val,
@@ -194,8 +194,8 @@ class ContentOfAlertDialog extends StatelessWidget {
                 width: 120,
                 child: ListTile(
                   horizontalTitleGap: 0,
-                  contentPadding: EdgeInsets.symmetric(horizontal: -4),
-                  title: Text("1500 руб."),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: -4),
+                  title: const Text("1500 руб."),
                   leading: Radio(
                     value: 4,
                     groupValue: getIt<FCStore>().val,
@@ -232,7 +232,7 @@ class ListOFTransactions extends StatelessWidget {
                   builder: (BuildContext context) {
                     return CustomAlertDialog(
                       content: Column(
-                        children: [],
+                        children: const [],
                       ),
                       firstButtonText: 'Удалить',
                       secondButtonText: 'Изменить',
@@ -283,9 +283,9 @@ class ListOFTransactions extends StatelessWidget {
                                           child: ListTile(
                                             horizontalTitleGap: 0,
                                             contentPadding:
-                                                EdgeInsets.symmetric(
+                                                const EdgeInsets.symmetric(
                                                     horizontal: -4),
-                                            title: Text("free"),
+                                            title: const Text("free"),
                                             leading: Radio(
                                               value: 1,
                                               groupValue:
@@ -303,9 +303,9 @@ class ListOFTransactions extends StatelessWidget {
                                           child: ListTile(
                                             horizontalTitleGap: 0,
                                             contentPadding:
-                                                EdgeInsets.symmetric(
+                                                const EdgeInsets.symmetric(
                                                     horizontal: -4),
-                                            title: Text("400 руб."),
+                                            title: const Text("400 руб."),
                                             leading: Radio(
                                               value: 2,
                                               groupValue:
@@ -327,9 +327,9 @@ class ListOFTransactions extends StatelessWidget {
                                           child: ListTile(
                                             horizontalTitleGap: 0,
                                             contentPadding:
-                                                EdgeInsets.symmetric(
+                                                const EdgeInsets.symmetric(
                                                     horizontal: -4),
-                                            title: Text("900 руб."),
+                                            title: const Text("900 руб."),
                                             leading: Radio(
                                               value: 3,
                                               groupValue:
@@ -347,9 +347,9 @@ class ListOFTransactions extends StatelessWidget {
                                           child: ListTile(
                                             horizontalTitleGap: 0,
                                             contentPadding:
-                                                EdgeInsets.symmetric(
+                                                const EdgeInsets.symmetric(
                                                     horizontal: -4),
-                                            title: Text("1500 руб."),
+                                            title: const Text("1500 руб."),
                                             leading: Radio(
                                               value: 4,
                                               groupValue:

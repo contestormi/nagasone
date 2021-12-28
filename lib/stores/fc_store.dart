@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:mobx/mobx.dart';
 import 'package:nagasone/data/datasources/nagasone_api.dart';
 import 'package:nagasone/data/models/fc_model.dart';
@@ -55,9 +54,6 @@ abstract class FCStoreBase with Store {
         uuid: uuid,
         amount: calculateAmount(tempVal),
         transactionType: tempIsSWitcher == true ? 'cashless' : 'cash');
-    print(fCTransaction.amount);
-    print(fCTransaction.transactionType);
-
     listOfFC[index] = fCTransaction;
   }
 

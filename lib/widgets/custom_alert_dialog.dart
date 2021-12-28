@@ -87,7 +87,7 @@ class CustomAlertDialog extends StatelessWidget {
                     ),
                   ],
                 )
-              : SizedBox(),
+              : const SizedBox(),
         ],
       ),
     );

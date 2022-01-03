@@ -36,10 +36,12 @@ abstract class FCStoreBase with Store {
       tempVal = 1;
     } else if (val == 400) {
       tempVal = 2;
-    } else if (val == 900) {
+    } else if (val == 600) {
       tempVal = 3;
-    } else if (val == 1500) {
+    } else if (val == 1000) {
       tempVal = 4;
+    } else if (val == 1500) {
+      tempVal = 5;
     }
   }
 
@@ -95,7 +97,9 @@ abstract class FCStoreBase with Store {
     } else if (variable == 2) {
       return 400;
     } else if (variable == 3) {
-      return 900;
+      return 600;
+    } else if (variable == 4) {
+      return 1000;
     } else {
       return 1500;
     }

@@ -179,7 +179,7 @@ class ContentOfAlertDialog extends StatelessWidget {
                 child: ListTile(
                   horizontalTitleGap: 0,
                   contentPadding: const EdgeInsets.symmetric(horizontal: -4),
-                  title: const Text("900 руб."),
+                  title: const Text("600 руб."),
                   leading: Radio(
                     value: 3,
                     groupValue: getIt<FCStore>().val,
@@ -195,9 +195,29 @@ class ContentOfAlertDialog extends StatelessWidget {
                 child: ListTile(
                   horizontalTitleGap: 0,
                   contentPadding: const EdgeInsets.symmetric(horizontal: -4),
-                  title: const Text("1500 руб."),
+                  title: const Text("1000 руб."),
                   leading: Radio(
                     value: 4,
+                    groupValue: getIt<FCStore>().val,
+                    onChanged: (value) {
+                      getIt<FCStore>().val = value as int;
+                    },
+                    activeColor: AppColors.darkBlue,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              SizedBox(
+                width: 120,
+                child: ListTile(
+                  horizontalTitleGap: 0,
+                  contentPadding: const EdgeInsets.symmetric(horizontal: -4),
+                  title: const Text("1500 руб."),
+                  leading: Radio(
+                    value: 5,
                     groupValue: getIt<FCStore>().val,
                     onChanged: (value) {
                       getIt<FCStore>().val = value as int;
@@ -329,7 +349,7 @@ class ListOFTransactions extends StatelessWidget {
                                             contentPadding:
                                                 const EdgeInsets.symmetric(
                                                     horizontal: -4),
-                                            title: const Text("900 руб."),
+                                            title: const Text("600 руб."),
                                             leading: Radio(
                                               value: 3,
                                               groupValue:
@@ -349,7 +369,7 @@ class ListOFTransactions extends StatelessWidget {
                                             contentPadding:
                                                 const EdgeInsets.symmetric(
                                                     horizontal: -4),
-                                            title: const Text("1500 руб."),
+                                            title: const Text("1000 руб."),
                                             leading: Radio(
                                               value: 4,
                                               groupValue:
@@ -363,7 +383,31 @@ class ListOFTransactions extends StatelessWidget {
                                           ),
                                         ),
                                       ],
-                                    )
+                                    ),
+                                    Row(
+                                      children: [
+                                        SizedBox(
+                                          width: 120,
+                                          child: ListTile(
+                                            horizontalTitleGap: 0,
+                                            contentPadding:
+                                                const EdgeInsets.symmetric(
+                                                    horizontal: -4),
+                                            title: const Text("1500 руб."),
+                                            leading: Radio(
+                                              value: 5,
+                                              groupValue:
+                                                  getIt<FCStore>().tempVal,
+                                              onChanged: (value) {
+                                                getIt<FCStore>().tempVal =
+                                                    value as int;
+                                              },
+                                              activeColor: AppColors.darkBlue,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ],
                                 ),
                                 firstButtonText: 'Отмена',

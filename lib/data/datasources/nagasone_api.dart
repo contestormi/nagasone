@@ -12,6 +12,7 @@ import 'dart:math';
 
 import 'package:nagasone/presentation/theme.dart';
 import 'package:nagasone/services/date_time_service.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../models/fc_stat_model.dart';
@@ -172,7 +173,12 @@ class NagasoneAPI {
       await Permission.storage.request();
     }
     try {
-      String documentsPath = '/storage/emulated/0/Documents';
+      String documentsPath;
+      if (Platform.isAndroid) {
+        documentsPath = '/storage/emulated/0/Documents/';
+      } else {
+        documentsPath = (await getApplicationSupportDirectory()).path;
+      }
       Directory(documentsPath)
           .create(recursive: true)
           .then((Directory directory) async {
@@ -213,7 +219,12 @@ class NagasoneAPI {
       await Permission.storage.request();
     }
     try {
-      String documentsPath = '/storage/emulated/0/Documents';
+      String documentsPath;
+      if (Platform.isAndroid) {
+        documentsPath = '/storage/emulated/0/Documents/';
+      } else {
+        documentsPath = (await getApplicationSupportDirectory()).path;
+      }
       Directory(documentsPath)
           .create(recursive: true)
           .then((Directory directory) async {

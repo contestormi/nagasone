@@ -528,7 +528,8 @@ class ListOfChips extends StatelessWidget {
                                                     RoundedRectangleBorder(
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              8.0),
+                                                        8.0,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -563,7 +564,8 @@ class ListOfChips extends StatelessWidget {
                                                     RoundedRectangleBorder(
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              8.0),
+                                                        8.0,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -598,7 +600,8 @@ class ListOfChips extends StatelessWidget {
                                                     RoundedRectangleBorder(
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              8.0),
+                                                        8.0,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -645,7 +648,8 @@ class ListOfChips extends StatelessWidget {
                                                     RoundedRectangleBorder(
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              8.0),
+                                                        8.0,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -680,7 +684,8 @@ class ListOfChips extends StatelessWidget {
                                                     RoundedRectangleBorder(
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              8.0),
+                                                        8.0,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -715,7 +720,8 @@ class ListOfChips extends StatelessWidget {
                                                     RoundedRectangleBorder(
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              8.0),
+                                                        8.0,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -762,7 +768,8 @@ class ListOfChips extends StatelessWidget {
                                                     RoundedRectangleBorder(
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              8.0),
+                                                        8.0,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -797,7 +804,8 @@ class ListOfChips extends StatelessWidget {
                                                     RoundedRectangleBorder(
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              8.0),
+                                                        8.0,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -832,7 +840,8 @@ class ListOfChips extends StatelessWidget {
                                                     RoundedRectangleBorder(
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              8.0),
+                                                        8.0,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),

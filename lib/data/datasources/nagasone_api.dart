@@ -183,7 +183,7 @@ class NagasoneAPI {
       String documentsPath;
       documentsPath = Platform.isAndroid
           ? '/storage/emulated/0/Documents/'
-          : (await getApplicationSupportDirectory()).path;
+          : (await getApplicationDocumentsDirectory()).path;
       Directory(documentsPath)
           .create(recursive: true)
           .then((Directory directory) async {
@@ -229,7 +229,7 @@ class NagasoneAPI {
       String documentsPath;
       documentsPath = Platform.isAndroid
           ? '/storage/emulated/0/Documents/'
-          : (await getApplicationSupportDirectory()).path;
+          : (await getApplicationDocumentsDirectory()).path;
       Directory(documentsPath)
           .create(recursive: true)
           .then((Directory directory) async {

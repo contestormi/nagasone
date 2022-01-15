@@ -137,32 +137,34 @@ class MyApp extends StatelessWidget {
 
   void showFCStat(BuildContext context) {
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return CustomAlertDialog(
-            content: Observer(builder: (_) {
-              return FutureBuilder<FCStatModel>(
-                  future: getIt<MainStore>().getFCStatTransactions(),
-                  builder: (context, snapshot) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                            'Сумма платежей за нал: ${snapshot.hasData ? snapshot.data!.cashFcSum.toString() : 0.toString()}'),
-                        Text(
-                            'Сумма платежей за безнал: ${snapshot.hasData ? snapshot.data!.cashlessFcSum.toString() : 0.toString()}'),
-                      ],
-                    );
-                  });
-            }),
-            firstButtonText: '',
-            secondButtonText: '',
-            title: 'Стата по FC',
-            secondButtonCallback: () {},
-            firstButtonCallback: () {},
-            showButtons: false,
-          );
-        });
+      context: context,
+      builder: (BuildContext context) {
+        return CustomAlertDialog(
+          content: Observer(builder: (_) {
+            return FutureBuilder<FCStatModel>(
+              future: getIt<MainStore>().getFCStatTransactions(),
+              builder: (context, snapshot) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Сумма платежей за нал: ${snapshot.hasData ? snapshot.data!.cashFcSum.toString() : 0.toString()}',
+                    ),
+                    Text(
+                      'Сумма платежей за безнал: ${snapshot.hasData ? snapshot.data!.cashlessFcSum.toString() : 0.toString()}',
+                    ),
+                  ],
+                );
+              },
+            );
+          }),
+          firstButtonText: '',
+          secondButtonText: '',
+          title: 'Стата по FC',
+          showButtons: false,
+        );
+      },
+    );
   }
 
   void showChipsStat(BuildContext context) {
@@ -172,28 +174,31 @@ class MyApp extends StatelessWidget {
         return CustomAlertDialog(
           content: Observer(builder: (_) {
             return FutureBuilder<ChipStatModel>(
-                future: getIt<MainStore>().getChipStatTransactions(),
-                builder: (context, snapshot) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                          'Количество фишек за нал: ${snapshot.hasData ? snapshot.data!.cashChipCount.toString() : 0.toString()}'),
-                      Text(
-                          'Количество фишек за безнал: ${snapshot.hasData ? snapshot.data!.cashlessChipCount.toString() : 0.toString()}'),
-                      Text(
-                          'Сумма платежей за нал: ${snapshot.hasData ? snapshot.data!.cashSum.toString() : 0.toString()}'),
-                      Text(
-                          'Сумма платежей за безнал: ${snapshot.hasData ? snapshot.data!.cashlessSum.toString() : 0.toString()}'),
-                    ],
-                  );
-                });
+              future: getIt<MainStore>().getChipStatTransactions(),
+              builder: (context, snapshot) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Количество фишек за нал: ${snapshot.hasData ? snapshot.data!.cashChipCount.toString() : 0.toString()}',
+                    ),
+                    Text(
+                      'Количество фишек за безнал: ${snapshot.hasData ? snapshot.data!.cashlessChipCount.toString() : 0.toString()}',
+                    ),
+                    Text(
+                      'Сумма платежей за нал: ${snapshot.hasData ? snapshot.data!.cashSum.toString() : 0.toString()}',
+                    ),
+                    Text(
+                      'Сумма платежей за безнал: ${snapshot.hasData ? snapshot.data!.cashlessSum.toString() : 0.toString()}',
+                    ),
+                  ],
+                );
+              },
+            );
           }),
           firstButtonText: '',
           secondButtonText: '',
           title: 'Стата по фишкам',
-          secondButtonCallback: () {},
-          firstButtonCallback: () {},
           showButtons: false,
         );
       },
@@ -201,7 +206,9 @@ class MyApp extends StatelessWidget {
   }
 
   void rebuildDB(
-      BuildContext context, TextEditingController textEditingController) {
+    BuildContext context,
+    TextEditingController textEditingController,
+  ) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -227,13 +234,14 @@ class MyApp extends StatelessWidget {
               Navigator.pop(context);
             } else {
               Fluttertoast.showToast(
-                  msg: "Неправильный пароль",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.BOTTOM,
-                  timeInSecForIosWeb: 1,
-                  backgroundColor: AppColors.grey,
-                  textColor: AppColors.white,
-                  fontSize: 12.0);
+                msg: "Неправильный пароль",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: AppColors.grey,
+                textColor: AppColors.white,
+                fontSize: 12.0,
+              );
             }
           },
           firstButtonCallback: () => Navigator.pop(context),

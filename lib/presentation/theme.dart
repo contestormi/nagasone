@@ -11,15 +11,24 @@ abstract class AppColors {
 
 abstract class TextStyles {
   static const textBold14 = TextStyle(
-      color: AppColors.black, fontSize: 14, fontWeight: FontWeight.bold);
+    color: AppColors.black,
+    fontSize: 14,
+    fontWeight: FontWeight.bold,
+  );
   static const textBold12 = TextStyle(
-      color: AppColors.black, fontSize: 12, fontWeight: FontWeight.bold);
+    color: AppColors.black,
+    fontSize: 12,
+    fontWeight: FontWeight.bold,
+  );
   static const text14Grey = TextStyle(color: AppColors.grey, fontSize: 14);
   static const text14White = TextStyle(color: AppColors.white, fontSize: 14);
   static const titleText14 = TextStyle(color: AppColors.black, fontSize: 14);
   static const titleText16 = TextStyle(color: AppColors.black, fontSize: 16);
   static const titleText20 = TextStyle(
-      color: AppColors.black, fontSize: 20, fontWeight: FontWeight.bold);
+    color: AppColors.black,
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+  );
   static const titleText19 = TextStyle(color: AppColors.black, fontSize: 19);
   static const titleText16DarkBlue =
       TextStyle(color: AppColors.darkBlue, fontSize: 16);

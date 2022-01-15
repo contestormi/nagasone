@@ -64,12 +64,16 @@ class _FCVisitScreenState extends State<FCVisitScreen> {
             getIt<MainStore>().listOfVisitors.isEmpty
                 ? FutureBuilder<List<VisitorModel>>(
                     future: getIt<MainStore>().getVistirosList(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<List<VisitorModel>> snapshot) {
+                    builder: (
+                      BuildContext context,
+                      AsyncSnapshot<List<VisitorModel>> snapshot,
+                    ) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(
-                            child: CircularProgressIndicator(
-                                color: AppColors.darkBlue));
+                          child: CircularProgressIndicator(
+                            color: AppColors.darkBlue,
+                          ),
+                        );
                       } else if (snapshot.connectionState ==
                           ConnectionState.done) {
                         if (snapshot.hasError) {
@@ -82,20 +86,22 @@ class _FCVisitScreenState extends State<FCVisitScreen> {
                           return const Padding(
                             padding: EdgeInsets.only(top: 10),
                             child: Center(
-                                child: Text(
-                              'Нет данных',
-                              style: TextStyles.titleText14,
-                            )),
+                              child: Text(
+                                'Нет данных',
+                                style: TextStyles.titleText14,
+                              ),
+                            ),
                           );
                         }
                       } else {
                         return Center(
-                            child: Text('State: ${snapshot.connectionState}'));
+                          child: Text('State: ${snapshot.connectionState}'),
+                        );
                       }
                     },
                   )
                 : const Expanded(child: ListOfVisitors()),
-            const SizedBox(height: 10)
+            const SizedBox(height: 10),
           ],
         );
       }),
@@ -168,8 +174,10 @@ class _ListOfVisitorsState extends State<ListOfVisitors> {
                                         inactiveThumbColor: AppColors.darkBlue,
                                         inactiveTrackColor: AppColors.lightBlue,
                                       ),
-                                      const Text('Не прошел',
-                                          style: TextStyles.textBold14),
+                                      const Text(
+                                        'Не прошел',
+                                        style: TextStyles.textBold14,
+                                      ),
                                     ],
                                   ),
                                   TextFormField(
@@ -190,7 +198,9 @@ class _ListOfVisitorsState extends State<ListOfVisitors> {
                               secondButtonCallback: () async {
                                 Navigator.pop(context);
                                 getIt<MainStore>().changeVisitor(
-                                    index, textEditingController.text);
+                                  index,
+                                  textEditingController.text,
+                                );
                               },
                             );
                           });

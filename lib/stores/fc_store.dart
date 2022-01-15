@@ -53,9 +53,10 @@ abstract class FCStoreBase with Store {
   @action
   Future<void> changeFCTransaction(int index, String uuid) async {
     var fCTransaction = await _api.changeFCTransaction(
-        uuid: uuid,
-        amount: calculateAmount(tempVal),
-        transactionType: tempIsSWitcher == true ? 'cashless' : 'cash');
+      uuid: uuid,
+      amount: calculateAmount(tempVal),
+      transactionType: tempIsSWitcher ? 'cashless' : 'cash',
+    );
     listOfFC[index] = fCTransaction;
   }
 
@@ -73,8 +74,9 @@ abstract class FCStoreBase with Store {
   @action
   Future<void> createFCTransation() async {
     var fCTransaction = await _api.createFCTransaction(
-        amount: calculateAmount(val),
-        transactionType: isSwitched == true ? 'cashless' : 'cash');
+      amount: calculateAmount(val),
+      transactionType: isSwitched ? 'cashless' : 'cash',
+    );
     listOfFC.add(fCTransaction);
   }
 
@@ -82,6 +84,7 @@ abstract class FCStoreBase with Store {
   Future<List<FCModel>> getFCTransactions() async {
     listOfFC.clear();
     listOfFC.addAll(await _api.getFCTransactions());
+
     return listOfFC;
   }
 

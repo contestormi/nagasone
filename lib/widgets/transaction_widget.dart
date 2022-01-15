@@ -3,15 +3,15 @@ import 'package:nagasone/presentation/theme.dart';
 import 'package:nagasone/services/date_time_service.dart';
 
 class TransactionWidget extends StatelessWidget {
-  const TransactionWidget(
-      {Key? key,
-      required this.uuid,
-      required this.transactionType,
-      required this.dateTime,
-      required this.chipsAmount,
-      required this.value,
-      required this.onTap})
-      : super(key: key);
+  const TransactionWidget({
+    Key? key,
+    required this.uuid,
+    required this.transactionType,
+    required this.dateTime,
+    required this.chipsAmount,
+    required this.value,
+    required this.onTap,
+  }) : super(key: key);
 
   final String uuid;
   final String transactionType;
@@ -57,10 +57,12 @@ class TransactionWidget extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: Center(
-                        child: Text(
-                            transactionType == 'cashless' ? 'БЕЗНАЛ' : 'НАЛ')),
+                      child: Text(
+                        transactionType == 'cashless' ? 'БЕЗНАЛ' : 'НАЛ',
+                      ),
+                    ),
                   ),
-                )
+                ),
               ],
             ),
             Padding(
@@ -75,22 +77,23 @@ class TransactionWidget extends StatelessWidget {
               child: Divider(),
             ),
             Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Дата: ${DateTimeService.formatDate(dateTime)}',
-                      style: TextStyles.titleText14,
-                    ),
-                    Text(
-                      'Время: ${DateTimeService.formatTime(dateTime)}',
-                      style: TextStyles.titleText14,
-                    ),
-                    const SizedBox(width: 40)
-                  ],
-                )),
-            const SizedBox(height: 10)
+              padding: const EdgeInsets.only(left: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Дата: ${DateTimeService.formatDate(dateTime)}',
+                    style: TextStyles.titleText14,
+                  ),
+                  Text(
+                    'Время: ${DateTimeService.formatTime(dateTime)}',
+                    style: TextStyles.titleText14,
+                  ),
+                  const SizedBox(width: 40),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
           ],
         ),
       ),

@@ -33,13 +33,14 @@ class NagasoneAPI {
 
     if (response.statusCode == 200) {
       Fluttertoast.showToast(
-          msg: "Удален",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: AppColors.grey,
-          textColor: AppColors.white,
-          fontSize: 12.0);
+        msg: "Удален",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: AppColors.grey,
+        textColor: AppColors.white,
+        fontSize: 12.0,
+      );
     } else {
       throw Exception(response.body);
     }
@@ -62,22 +63,24 @@ class NagasoneAPI {
         body: json.encode(body),
       );
       Fluttertoast.showToast(
-          msg: "Успешно создан",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: AppColors.grey,
-          textColor: AppColors.white,
-          fontSize: 12.0);
+        msg: "Успешно создан",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: AppColors.grey,
+        textColor: AppColors.white,
+        fontSize: 12.0,
+      );
     } catch (e) {
       Fluttertoast.showToast(
-          msg: "$e",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: AppColors.grey,
-          textColor: AppColors.white,
-          fontSize: 12.0);
+        msg: "$e",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: AppColors.grey,
+        textColor: AppColors.white,
+        fontSize: 12.0,
+      );
       rethrow;
     }
 
@@ -102,6 +105,7 @@ class NagasoneAPI {
 
     if (response.statusCode == 200) {
       final List? jsonResponse = jsonDecode(response.body) as List<dynamic>?;
+
       return jsonResponse!
           .map((fc) => VisitorModel.fromJson(fc as Map<String, dynamic>))
           .toList();
@@ -130,22 +134,24 @@ class NagasoneAPI {
         body: json.encode(body),
       );
       Fluttertoast.showToast(
-          msg: "Успешно изменен",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: AppColors.grey,
-          textColor: AppColors.white,
-          fontSize: 12.0);
+        msg: "Успешно изменен",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: AppColors.grey,
+        textColor: AppColors.white,
+        fontSize: 12.0,
+      );
     } catch (e) {
       Fluttertoast.showToast(
-          msg: "$e",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: AppColors.grey,
-          textColor: AppColors.white,
-          fontSize: 12.0);
+        msg: "$e",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: AppColors.grey,
+        textColor: AppColors.white,
+        fontSize: 12.0,
+      );
       rethrow;
     }
 
@@ -161,24 +167,23 @@ class NagasoneAPI {
   Future<void> downloadFCReport() async {
     Random ran = Random();
     Fluttertoast.showToast(
-        msg: 'Загрузка началась',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: AppColors.grey,
-        textColor: AppColors.white,
-        fontSize: 12.0);
+      msg: 'Загрузка началась',
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: AppColors.grey,
+      textColor: AppColors.white,
+      fontSize: 12.0,
+    );
     var status = await Permission.storage.status;
     if (!status.isGranted) {
       await Permission.storage.request();
     }
     try {
       String documentsPath;
-      if (Platform.isAndroid) {
-        documentsPath = '/storage/emulated/0/Documents/';
-      } else {
-        documentsPath = (await getApplicationSupportDirectory()).path;
-      }
+      documentsPath = Platform.isAndroid
+          ? '/storage/emulated/0/Documents/'
+          : (await getApplicationSupportDirectory()).path;
       Directory(documentsPath)
           .create(recursive: true)
           .then((Directory directory) async {
@@ -192,13 +197,14 @@ class NagasoneAPI {
         );
       });
       Fluttertoast.showToast(
-          msg: 'Загрузка окончена, файл лежит в документах',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: AppColors.grey,
-          textColor: AppColors.white,
-          fontSize: 12.0);
+        msg: 'Загрузка окончена, файл лежит в документах',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: AppColors.grey,
+        textColor: AppColors.white,
+        fontSize: 12.0,
+      );
     } catch (e) {
       throw Exception(e);
     }
@@ -207,24 +213,23 @@ class NagasoneAPI {
   Future<void> downloadChipsReport() async {
     Random ran = Random();
     Fluttertoast.showToast(
-        msg: 'Загрузка началась',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: AppColors.grey,
-        textColor: AppColors.white,
-        fontSize: 12.0);
+      msg: 'Загрузка началась',
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: AppColors.grey,
+      textColor: AppColors.white,
+      fontSize: 12.0,
+    );
     var status = await Permission.storage.status;
     if (!status.isGranted) {
       await Permission.storage.request();
     }
     try {
       String documentsPath;
-      if (Platform.isAndroid) {
-        documentsPath = '/storage/emulated/0/Documents/';
-      } else {
-        documentsPath = (await getApplicationSupportDirectory()).path;
-      }
+      documentsPath = Platform.isAndroid
+          ? '/storage/emulated/0/Documents/'
+          : (await getApplicationSupportDirectory()).path;
       Directory(documentsPath)
           .create(recursive: true)
           .then((Directory directory) async {
@@ -238,13 +243,14 @@ class NagasoneAPI {
         );
       });
       Fluttertoast.showToast(
-          msg: 'Загрузка окончена, файл лежит в документах',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: AppColors.grey,
-          textColor: AppColors.white,
-          fontSize: 12.0);
+        msg: 'Загрузка окончена, файл лежит в документах',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: AppColors.grey,
+        textColor: AppColors.white,
+        fontSize: 12.0,
+      );
     } catch (e) {
       throw Exception(e);
     }
@@ -269,22 +275,24 @@ class NagasoneAPI {
         body: json.encode(body),
       );
       Fluttertoast.showToast(
-          msg: "Успешно создано",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: AppColors.grey,
-          textColor: AppColors.white,
-          fontSize: 12.0);
+        msg: "Успешно создано",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: AppColors.grey,
+        textColor: AppColors.white,
+        fontSize: 12.0,
+      );
     } catch (e) {
       Fluttertoast.showToast(
-          msg: "$e",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: AppColors.grey,
-          textColor: AppColors.white,
-          fontSize: 12.0);
+        msg: "$e",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: AppColors.grey,
+        textColor: AppColors.white,
+        fontSize: 12.0,
+      );
       rethrow;
     }
 
@@ -316,22 +324,24 @@ class NagasoneAPI {
         body: json.encode(body),
       );
       Fluttertoast.showToast(
-          msg: "Успешно создано",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: AppColors.grey,
-          textColor: AppColors.white,
-          fontSize: 12.0);
+        msg: "Успешно создано",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: AppColors.grey,
+        textColor: AppColors.white,
+        fontSize: 12.0,
+      );
     } catch (e) {
       Fluttertoast.showToast(
-          msg: "$e",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: AppColors.grey,
-          textColor: AppColors.white,
-          fontSize: 12.0);
+        msg: "$e",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: AppColors.grey,
+        textColor: AppColors.white,
+        fontSize: 12.0,
+      );
       rethrow;
     }
 
@@ -364,22 +374,24 @@ class NagasoneAPI {
         body: json.encode(body),
       );
       Fluttertoast.showToast(
-          msg: "Успешно изменено",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: AppColors.grey,
-          textColor: AppColors.white,
-          fontSize: 12.0);
+        msg: "Успешно изменено",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: AppColors.grey,
+        textColor: AppColors.white,
+        fontSize: 12.0,
+      );
     } catch (e) {
       Fluttertoast.showToast(
-          msg: "$e",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: AppColors.grey,
-          textColor: AppColors.white,
-          fontSize: 12.0);
+        msg: "$e",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: AppColors.grey,
+        textColor: AppColors.white,
+        fontSize: 12.0,
+      );
       rethrow;
     }
 
@@ -412,22 +424,24 @@ class NagasoneAPI {
         body: json.encode(body),
       );
       Fluttertoast.showToast(
-          msg: "Успешно изменено",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: AppColors.grey,
-          textColor: AppColors.white,
-          fontSize: 12.0);
+        msg: "Успешно изменено",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: AppColors.grey,
+        textColor: AppColors.white,
+        fontSize: 12.0,
+      );
     } catch (e) {
       Fluttertoast.showToast(
-          msg: "$e",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: AppColors.grey,
-          textColor: AppColors.white,
-          fontSize: 12.0);
+        msg: "$e",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: AppColors.grey,
+        textColor: AppColors.white,
+        fontSize: 12.0,
+      );
       rethrow;
     }
 
@@ -452,6 +466,7 @@ class NagasoneAPI {
 
     if (response.statusCode == 200) {
       final List? jsonResponse = jsonDecode(response.body) as List<dynamic>?;
+
       return jsonResponse!
           .map((fc) => ChipModel.fromJson(fc as Map<String, dynamic>))
           .toList();
@@ -472,13 +487,14 @@ class NagasoneAPI {
 
     if (response.statusCode == 200) {
       Fluttertoast.showToast(
-          msg: "Удалено",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: AppColors.grey,
-          textColor: AppColors.white,
-          fontSize: 12.0);
+        msg: "Удалено",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: AppColors.grey,
+        textColor: AppColors.white,
+        fontSize: 12.0,
+      );
     } else {
       throw Exception(response.body);
     }
@@ -496,13 +512,14 @@ class NagasoneAPI {
 
     if (response.statusCode == 200) {
       Fluttertoast.showToast(
-          msg: "Удалено",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: AppColors.grey,
-          textColor: AppColors.white,
-          fontSize: 12.0);
+        msg: "Удалено",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: AppColors.grey,
+        textColor: AppColors.white,
+        fontSize: 12.0,
+      );
     } else {
       throw Exception(response.body);
     }
@@ -516,25 +533,27 @@ class NagasoneAPI {
           await http.get(Uri.parse(url)).timeout(const Duration(seconds: 5));
     } catch (e) {
       Fluttertoast.showToast(
-          msg: "$e",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: AppColors.grey,
-          textColor: AppColors.white,
-          fontSize: 12.0);
+        msg: "$e",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: AppColors.grey,
+        textColor: AppColors.white,
+        fontSize: 12.0,
+      );
       rethrow;
     }
 
     if (response.statusCode == 200) {
       Fluttertoast.showToast(
-          msg: "DB dump saved!",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: AppColors.grey,
-          textColor: AppColors.white,
-          fontSize: 12.0);
+        msg: "DB dump saved!",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: AppColors.grey,
+        textColor: AppColors.white,
+        fontSize: 12.0,
+      );
     } else {
       throw Exception(response.body);
     }
@@ -552,6 +571,7 @@ class NagasoneAPI {
 
     if (response.statusCode == 200) {
       final List? jsonResponse = jsonDecode(response.body) as List<dynamic>?;
+
       return jsonResponse!
           .map((fc) => FCModel.fromJson(fc as Map<String, dynamic>))
           .toList();
@@ -606,13 +626,15 @@ class NagasoneAPI {
 
     if (response.statusCode == 200) {
       Fluttertoast.showToast(
-          msg: "DB rebuilded",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: AppColors.grey,
-          textColor: AppColors.white,
-          fontSize: 12.0);
+        msg: "DB rebuilded",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: AppColors.grey,
+        textColor: AppColors.white,
+        fontSize: 12.0,
+      );
+
       return true;
     } else {
       throw Exception(response.body);

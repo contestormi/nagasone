@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:nagasone/presentation/theme.dart';
 
 class CustomAlertDialog extends StatelessWidget {
-  const CustomAlertDialog(
-      {Key? key,
-      required this.title,
-      required this.content,
-      required this.firstButtonText,
-      required this.secondButtonText,
-      required this.firstButtonCallback,
-      required this.secondButtonCallback,
-      required this.showButtons})
-      : super(key: key);
+  const CustomAlertDialog({
+    Key? key,
+    required this.title,
+    required this.content,
+    required this.firstButtonText,
+    required this.secondButtonText,
+    this.firstButtonCallback,
+    this.secondButtonCallback,
+    required this.showButtons,
+  }) : super(key: key);
 
   final String title;
   final String firstButtonText;
   final String secondButtonText;
   final Widget content;
-  final VoidCallback firstButtonCallback;
-  final VoidCallback secondButtonCallback;
+  final VoidCallback? firstButtonCallback;
+  final VoidCallback? secondButtonCallback;
   final bool showButtons;
 
   @override
@@ -26,7 +26,8 @@ class CustomAlertDialog extends StatelessWidget {
     return AlertDialog(
       elevation: 20,
       shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(32.0))),
+        borderRadius: BorderRadius.all(Radius.circular(32.0)),
+      ),
       title: Text(
         title,
         style: TextStyles.titleText19,
@@ -70,12 +71,15 @@ class CustomAlertDialog extends StatelessWidget {
                       width: 120,
                       child: ElevatedButton(
                         onPressed: secondButtonCallback,
-                        child: Text(secondButtonText,
-                            style: TextStyles.text14White),
+                        child: Text(
+                          secondButtonText,
+                          style: TextStyles.text14White,
+                        ),
                         style: ButtonStyle(
                           elevation: MaterialStateProperty.all<double>(0),
                           backgroundColor: MaterialStateProperty.all<Color>(
-                              AppColors.darkBlue),
+                            AppColors.darkBlue,
+                          ),
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(

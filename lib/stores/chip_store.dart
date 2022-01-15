@@ -84,17 +84,19 @@ abstract class ChipStoreBase with Store {
   @action
   Future<void> changeChipTransation(String uuid, int index) async {
     var chipTransaction = await _api.changeChipTransaction(
-        uuid: uuid,
-        chipCount: tempChipsNumber,
-        transactionType: tempIsSwitched == true ? 'cashless' : 'cash');
+      uuid: uuid,
+      chipCount: tempChipsNumber,
+      transactionType: tempIsSwitched ? 'cashless' : 'cash',
+    );
     listOfChips[index] = chipTransaction;
   }
 
   @action
   Future<void> createChipTransation() async {
     var chipTransaction = await _api.createChipTransaction(
-        chipCount: chipsNumber,
-        transactionType: isSwitched == true ? 'cashless' : 'cash');
+      chipCount: chipsNumber,
+      transactionType: isSwitched ? 'cashless' : 'cash',
+    );
     listOfChips.add(chipTransaction);
   }
 
@@ -102,6 +104,7 @@ abstract class ChipStoreBase with Store {
   Future<List<ChipModel>> getChipsTransactions() async {
     listOfChips.clear();
     listOfChips.addAll(await _api.getChipsTransactions());
+
     return listOfChips;
   }
 

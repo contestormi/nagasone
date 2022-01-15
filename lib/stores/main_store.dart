@@ -48,6 +48,7 @@ abstract class MainStoreBase with Store {
   Future<List<VisitorModel>> getVistirosList() async {
     listOfVisitors.clear();
     listOfVisitors.addAll(await _api.getVistirosList());
+
     return listOfVisitors;
   }
 
@@ -82,6 +83,9 @@ abstract class MainStoreBase with Store {
   @action
   Future<void> changeVisitor(int index, String fio) async {
     listOfVisitors[index] = await _api.changeVisitor(
-        id: listOfVisitors[index].id, fio: fio, isPassed: !isSwitched);
+      id: listOfVisitors[index].id,
+      fio: fio,
+      isPassed: !isSwitched,
+    );
   }
 }
